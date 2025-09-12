@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100005
+int n;
+long long a[maxN];
+int main()
+{
+    //freopen("SUMSEQ0.INP","r",stdin);
+    //freopen("SUMSEQ0.OUT","w",stdout);
+    cin>>n;
+    for (int i=0;i<n;++i){
+        cin>>a[i];
+    }
+    long long sum=0,cnt=0;
+    map<long long,long long>place;
+    place[0]=1;
+    for (int i=0;i<n;++i){
+        sum+=a[i];
+        cnt+=place[sum];
+        ++place[sum];
+    }
+    cout<<cnt;
+    return 0;
+}
