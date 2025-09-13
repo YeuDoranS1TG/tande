@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100005
+int n;
+long long k,a[maxN];
+int main()
+{
+    //freopen("CUBICS.INP","r",stdin);
+    //freopen("CUBICS.OUT","w",stdout);
+    cin>>n>>k;
+    for (int i=0;i<n;++i){
+        cin>>a[i];
+    }
+    vector<pair<long long,long long>>v(n);
+    long long prefixsum=0;
+    for (int i=0;i<n;++i){
+        prefixsum+=a[i]-k;
+        v[i].first=prefixsum;
+        v[i].second=i;
+    }
+    sort(v.begin(),v.end());
+    long long maxval=0,resi;
+    for (int i=0;i<n-1;++i){
+        int j=i+1;
+        while (j<n && v[i].first==v[j].first){
+            ++j;
+        } --j;
+        if (v[i].first==v[j].first){
+            if (v[j].second-v[i].second>maxval){
+                maxval=v[j].second-v[i].second;
+                resi=v[i].second;
+            }
+        }
+    }
+    if (maxval==0) cout<<0;
+    else cout<<maxval<<" "<<resi+2;
+    return 0;
+}
