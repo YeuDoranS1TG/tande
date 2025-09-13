@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100005
+int n;
+long long a[maxN];
+int main()
+{
+    //freopen("PS.INP","r",stdin);
+    //freopen("PS.OUT","w",stdout);
+    cin>>n;
+    for (int i=0;i<n;++i) cin>>a[i];
+    vector<pair<long long,long long>>v(n);
+    long long prefixsum=0;
+    for (int i=0;i<n;++i){
+        prefixsum+=a[i];
+        v[i].first=prefixsum;
+        v[i].second=i+1;
+    }
+    sort(v.begin(),v.end());
+    long long maxval=0,resi,resj,minId=v[0].second;
+    for (int i=1;i<n;++i){
+        if (v[i].second>minId && v[i].first!=v[i-1].first){
+            int distance=v[i].second-minId;
+            if (distance>maxval){
+                maxval=distance;
+                resi=v[i].second;
+                resj=minId;
+            }
+        }
+        minId=min(minId,v[i].second);
+    }
+    cout<<resj+2<<" "<<resi+1;
+    return 0;
+}
