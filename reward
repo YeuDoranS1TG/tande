@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+struct reward{
+    int t,d;
+};
+bool ss(const reward &x, const reward &y){
+    if (x.t==y.t) return x.d<y.d;
+    return x.t<y.t;
+}
+int main()
+{
+    freopen("REWARD.INP","r",stdin);
+    freopen("REWARD.OUT","w",stdout);
+    cin>>n;
+    vector<reward>v(n);
+    for (int i=0;i<n;++i){
+        cin>>v[i].t>>v[i].d;
+    }
+    sort(v.begin(),v.end(),ss);
+    long long f=0,cnt=0;
+    for (int i=0;i<n;++i){
+        f+=v[i].t;
+        cnt+=v[i].d-f;
+    }
+    cout<<cnt;
+    return 0;
+}
