@@ -33,3 +33,18 @@ int main()
     cout<<resi+2<<" "<<resj+1;
     return 0;
 }
+/*
+ĐOẠN 0 
+Cho dãy số nguyên 𝑎1,𝑎2,…,𝑎𝑛(1 ≤ 𝑛 ≤ 105;|𝑎𝑖| ≤ 106). Hãy tìm một đoạn dài nhất gồm các phần tử 
+liên tiếp trong dãy 𝑎𝐿,𝑎𝐿+1,…,𝑎𝐻 có tổng bằng 0 
+Dữ liệu: vào từ tập tin văn bản SZERO.INP - - 
+Dòng 1: Chứa số 𝑛. 
+Dòng 2: Chứa 𝑛 số 𝑎1,𝑎2,…,𝑎𝑛 theo đúng thứ tự cách nhau ít nhất một dấu cách. 
+Kết quả: ghi ra tập tin văn bản SZERO.OUT hai số 𝐿,𝐻 tìm được. 
+Ví dụ: 
+SZERO.INP 
+9 
+2 7 5 -3 -2 4 -9 -2 1 
+SZERO.OUT 
+2 8
+*/
