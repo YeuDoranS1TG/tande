@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct tongnhonhat{
+    long long c,d;
+};
+int n,m,resi,resj;
+long long minval=LLONG_MAX;
+vector<long long>a;
+vector <tongnhonhat>b;
+bool ss(const tongnhonhat &x, const tongnhonhat &y){
+    return x.c<y.c;
+}
+int binarysearch(int lo, int hi, int val){
+    int pos=hi+1;
+    while (lo<=hi){
+        int mid=(lo+hi)/2;
+        if (b[mid].c>=val){
+            pos=mid;
+            hi=mid-1;
+        }
+        else lo=mid+1;
+    }
+    return pos;
+}
+int main()
+{
+    freopen("ASUMMIN.INP","r",stdin);
+    freopen("ASUMMIN.OUT","w",stdout);
+    cin>>m>>n;
+    a.resize(m);
+    for (int i=0;i<m;++i) cin>>a[i];
+    b.resize(n);
+    for (int j=0;j<n;++j){
+        cin>>b[j].c;
+        b[j].d=j;
+    }
+    sort(b.begin(),b.end(),ss);
+    for (int i=0;i<m;++i){
+        int res1=binarysearch(0,n-1,-a[i]);
+        if(res1<n){
+            long long val=abs(a[i] + b[res1].c);
+            if (val<minval){
+                minval=val;
+                resi=i;
+                resj=res1;
+            }
+        }
+        if (res1>0){
+            int res2=res1-1;
+            long long val=abs(a[i] + b[res2].c);
+            if (val<minval){
+                minval=val;
+                resi=i;
+                resj=res2;
+            }
+        }
+    }
+    cout<<resi+1<<" "<<b[resj].d+1;
+    return 0;
+}
+/*
+TỔNG NHỎ NHẤT 
+Cho hai dãy số nguyên 𝐴 = (𝑎1,𝑎2,…,𝑎𝑚) và 𝐵 = (𝑏1,𝑏2,…,𝑏𝑛) hãy tìm một phần tử 𝑎𝑖 trong dãy 𝐴 và 
+một phần tử 𝑏𝑗 trong dãy 𝐵 có |𝑎𝑖 + 𝑏𝑗| là nhỏ nhất có thể (1 ≤ 𝑖 ≤ 𝑚;1 ≤ 𝑗 ≤ 𝑛). 
+Dữ liệu: Vào từ tập tin văn bản ASUMMIN.INP - - - 
+Dòng 1 chứa hai số nguyên dương 𝑚,𝑛 ≤ 105. 
+Dòng 2 chứa 𝑚 số nguyên 𝑎1,𝑎2,…,𝑎𝑚(∀𝑖:|𝑎𝑖| < 231). 
+Dòng 3 chứa 𝑛 số nguyên 𝑏1,𝑏2,…,𝑏𝑛(∀𝑗:|𝑏𝑗| < 231). 
+Kết quả: Ghi ra tập tin văn bản ASUMMIN.OUT hai chỉ số 𝑖 và 𝑗 của hai phần tử tương ứng tìm được. 
+Ví dụ 
+ASUMMIN.INP 
+ASUMMIN.OUT 
+2 4 
+4 5 
+1 8 2 9 -5 -6 3 -7 -4 
+Giải thích: |𝑎2 + 𝑏4| = |8 + (−7)| = 1
+*/
