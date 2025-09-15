@@ -26,3 +26,23 @@ int main()
     cout<<cnt;
     return 0;
 }
+/*
+MỨC THƯỞNG 
+Cho danh sách gồm 𝑛 công việc. Công việc thứ 𝑖 có thời gian xử lý 𝑡𝑖 và thời hạn hoàn thành 𝑑𝑖 (deadline). 
+Nếu bạn thực hiện xong công việc thứ 𝑖 tại thời điểm 𝑓𝑖 thì bạn sẽ nhận được mức thưởng 𝑑𝑖 − 𝑓𝑖 (mức 
+thưởng có thể bị âm, khi đó được xem là mức phạt). Thời điểm được tính bắt đầu từ 0 và bạn phải hoàn 
+thành tất cả 𝑛 công việc theo một thứ tự nào đó một cách tuần tự. 
+Yêu cầu: Hãy tính tổng mức thưởng tối đa có thể nhận được. 
+Dữ liệu: Vào từ tập tin văn bản REWARD.INP - - 
+Dòng đầu tiên chứa số nguyên 𝑛(1 ≤ 𝑛 ≤ 2 × 105) – số công việc được giao. 
+Dòng thứ 𝑖 trong 𝑛 dòng tiếp theo chứa 2 số nguyên 𝑡𝑖,𝑑𝑖(1 ≤ 𝑡𝑖,𝑑𝑖 ≤ 106) – mô tả một công việc. 
+Kết quả: Ghi ra tập tin văn bản REWARD.OUT tổng mức thưởng tối đa có thể nhận được. 
+Ví dụ: 
+REWARD.INP 
+3 
+6 10 
+8 15 
+5 12 
+REWARD.OUT
+2 
+*/
