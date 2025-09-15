@@ -36,3 +36,23 @@ int main()
     else cout<<maxval<<" "<<resi+2;
     return 0;
 }
+/*
+KHỐI LẬP PHƯƠNG  
+Quà sinh nhật của Tí là một bộ xếp hình Lego. Tí xếp thành 𝑛 tháp, tháp thứ 𝑖 có độ cao là 𝑎𝑖.  
+Tí rất có cảm tình với số nguyên 𝑘, vì vậy dãy liên tục các tháp được coi là hài hòa nếu chúng có độ cao 
+trung bình là 𝑘. 
+Yêu cầu: Cho 𝑛, 𝑘 và dãy 𝑎1, 𝑎2, … , 𝑎𝑛. Hãy xác định dãy tháp hài hòa dài nhất, chỉ ra tháp đầu tiên và độ 
+dài của dãy tìm được. Nếu tồn tại nhiều dãy cùng độ dài thì chỉ ra dãy tháp có vị trí đầu nhỏ nhất. Nếu không 
+tồn tại dãy tháp thì đưa ra một số 0.  
+Dữ liệu: Vào từ tập tin văn bản CUBICS.INP  - - 
+Dòng đầu tiên chứa 2 số nguyên 𝑛 và 𝑘(1 ≤ 𝑛 ≤ 105; 1 ≤ 𝑘 ≤ 109),  
+Dòng thứ hai chứa dãy gồm 𝑛 số nguyên 𝑎1, 𝑎2, … , 𝑎𝑛(1 ≤ 𝑎𝑖 ≤ 109).  
+Kết quả: Ghi ra tập tin văn bản CUBICS.OUT trên một dòng gồm 2 số nguyên: độ dài của dãy tìm được 
+và số thứ tự của tháp đầu tiên hoặc một số 0 nếu không tồn tại dãy.  
+Ví dụ: 
+CUBICS.INP 
+5 3  
+1 2 3 4 6  
+CUBICS.OUT
+3 2 
+*/
