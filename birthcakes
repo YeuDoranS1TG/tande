@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+vector<long long>a;
+int main()
+{
+    freopen("BIRTHCAKES.INP","r",stdin);
+    freopen("BIRTHCAKES.OUT","w",stdout);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin>>n;
+    for (int i=0;i<n;++i){
+        long long x;
+        cin>>x;
+        a.push_back(x);
+    }
+    sort(a.begin(),a.end());
+    int cnt=n;
+    int i=0,j=n/2;
+    while (i<n/2 && j<n){
+        if (a[i]*2<=a[j]){
+            --cnt;
+            ++i,++j;
+        }
+        else {
+            ++j;
+        }
+    }
+    cout<<cnt;
+    return 0;
+}
+/*
+BÁNH SINH NHẬT 
+Trong ngày sinh nhật của mình, Mai - một hoa khôi của trường, được các bạn nam trong trường hâm mộ 
+tặng cho rất nhiều bánh kem. Vì số lượng bánh là rất lớn nên Mai phải sắp chồng các bánh lên nhau mới có 
+đủ chỗ để. 
+Biết rằng một cái bánh kem có thể xếp chồng lên trên một cái bánh kem khác nếu như trọng lượng của nó 
+nhỏ hơn hoặc bằng nửa trọng lượng của bánh đặt bên dưới. Vì những chiếc bánh kem rất mềm mại và mỏng 
+manh nên Mai chỉ có thể xếp mỗi chồng tối đa 2 bánh kem (có thể có những chồng chỉ gồm 1 cái bánh kem). 
+Chẳng có 8 bánh kem lần lượt có khối lượng 2, 5, 7, 6, 9, 8, 4, 2. 
+2 
+5 
+7 
+6 
+9 
+8 
+4
+2
+Một phương án dồn để có số chồng còn lại là ít nhất bằng 5. 
+7-2 
+5 
+6-2 
+9-4  
+8 
+Yêu cầu: Tìm phương án xếp chồng các bánh lên nhau sao cho số chồng bánh sau khi dồn lại là ít nhất. 
+Dữ liệu: Vào từ tập tin bản BIRTHCAKES.INP - - 
+Dòng đầu tiên chứa số nguyên dương 𝑛(𝑛 ≤ 106) – số bánh kem. 
+Dòng tiếp theo chứa 𝑛 số nguyên dương 𝑎1,𝑎2,…,𝑎𝑛(𝑎𝑖 ≤ 109) là trọng lượng của 𝑛 chiếc bánh kem 
+tương ứng, các số cách nhau khoảng trắng. 
+Kết quả: Ghi ra tập tin văn bản BIRTHCAKES.OUT số chồng bánh ít nhất còn lại sau khi dồn. 
+Ví dụ: 
+BIRTHCAKES.INP 
+8 
+2 5 7 6 9 8 4 2 
+BIRTHCAKES.OUT 
+5
+*/
