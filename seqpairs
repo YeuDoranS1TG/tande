@@ -41,3 +41,40 @@ int main()
     cout<<cnt;
     return 0;
 }
+/*
+CẶP DÃY CON 
+Cho hai dãy số nguyên 𝐴=(𝑎0,𝑎1,…,𝑎𝑚−1) và 𝐵=(𝑏0,𝑏1,…,𝑏𝑛−1). Người ta muốn chọn một dãy con 
+khác rỗng gồm các phần tử liên tiếp trong 𝐴 và một dãy con khác rỗng gồm các phần tử liên tiếp trong 𝐵 
+sao cho hai dãy con được chọn này có tổng các phần tử bằng nhau. Hai cách chọn được gọi là khác nhau 
+nếu có phần tử của 𝐴 hoặc của 𝐵 được chọn trong một cách nhưng không được chọn trong cách còn lại. 
+Yêu cầu: Cho biết có bao nhiêu cách chọn? 
+Dữ liệu: Vào từ tập tin văn bản SEQPAIRS.INP - Dòng đầu tiên chứa hai số nguyên dương 𝑚,𝑛≤1000. - Dòng thứ hai chứa 𝑚 số nguyên 𝑎0,𝑎1,…,𝑎𝑚−1(∀𝑖:|𝑎𝑖|≤109). - Dòng thứ ba chứa 𝑛 số nguyên 𝑏0,𝑏1,…,𝑏𝑛−1(∀𝑗:|𝑏𝑗|≤109). 
+Kết quả: Ghi ra tập tin văn bản SEQPAIRS.OUT một số nguyên là số cách chọn tìm được. 
+Ví dụ: 
+SEQPAIRS.INP
+4 6 
+2 4 6 8 
+1 3 5 7 9 20 
+SEQPAIRS.OUT 
+4 
+
+SEQPAIRS.INP
+3 2 
+0 0 0 
+0 0 
+SEQPAIRS.OUT 
+18 
+
+SEQPAIRS.INP
+2 4 
+0 0 
+1 -1 1 -1 
+SEQPAIRS.OUT 
+12 
+
+Giải thích: ví dụ 1 có 4 cách chọn có thể là: 
+4=1+3 
+8=3+5 
+2+4+6=5+7 
+2+4+6+8=20
+*/
