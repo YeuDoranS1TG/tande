@@ -22,3 +22,19 @@ int main()
     cout<<cnt;
     return 0;
 }
+/*
+ĐOẠN CON CÓ TỔNG 0 
+Cho một dãy số nguyên gồm 𝑛 phần tử 𝑎1,𝑎2,…,𝑎𝑛. Một đoạn con của dãy gồm các phần tử nằm liên tiếp 
+nhau trên dãy. 
+Yêu cầu: Đếm số đoạn con có tổng các phần tử trên đoạn bằng 0. 
+Dữ liệu: Vào từ tập tin văn bản SUMSEQ0.INP - - 
+Dòng đầu tiên chứa số nguyên 𝑛(1 ≤ 𝑛 ≤ 105). 
+Dòng thứ hai chứa dãy gồm 𝑛 số nguyên 𝑎1,𝑎2,…,𝑎𝑛(|𝑎𝑖| ≤ 109). 
+Kết quả: Ghi ra tập tin văn bản SUMSEQ0.OUT số lượng đoạn con tìm được. 
+Ví dụ: 
+SUMSEQ0.INP 
+5 
+2 1 -1 -2 0 
+SUMSEQ0.OUT
+4 
+*/
