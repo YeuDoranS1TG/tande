@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    freopen("ANASUM.INP","r",stdin);
+    freopen("ANASUM.OUT","w",stdout);
+    int n; cin>>n;
+    vector<long long>a(n);
+    for (int i=0;i<n;++i) cin>>a[i];
+    sort(a.begin(),a.end());
+    long long sum=1;
+    for (int i=0;i<n;++i){
+        if (sum<a[i]) break;
+        else sum+=a[i];
+    }
+    cout<<sum;
+    return 0;
+}
+/*
+PHÂN TÍCH THÀNH TỔNG
+Cho dãy số nguyên dương 𝑎1,𝑎2,…,𝑎𝑛. Tìm số nguyên dương 𝑇 nhỏ nhất sao cho không thể phân tích 𝑇
+thành tổng của một số phần tử bất kỳ của dãy (mỗi phần tử chỉ được sử dụng 1 lần).
+Chẳng hạn dãy 2 1 17 3 15 7 thì 𝑇 = 14 là số nguyên dương nhỏ nhất không thể phân tích thành tổng
+của một số phần tử của dãy.
+Dữ liệu: Vào từ tập tin văn bản ANASUM.INP - -
+Dòng đầu chứa số nguyên dương 𝑛(𝑛 ≤ 106)
+Dòng tiếp theo chứa dãy số nguyên dương 𝑎1,𝑎2,…,𝑎𝑛(1 ≤ 𝑎𝑖 ≤ 109)
+Kết quả: Ghi ra tập tin văn bản ANASUM.OUT số nguyên dương 𝑇.
+Ví dụ:
+ANASUM.INP
+6
+2 1 17 3 15 7
+ANASUM.OUT
+14
+*/
