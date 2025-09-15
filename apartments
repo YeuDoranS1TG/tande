@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long n,m,k,cnt=0;
+vector<long long>a,b;
+int main()
+{
+    freopen("APARTMENTS.INP","r",stdin);
+    freopen("APARTMENTS.OUT","w",stdout);
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    cin>>n>>m>>k;
+    for (long long i=0;i<n;++i){
+        long long x;
+        cin>>x;
+        a.push_back(x);
+    }
+    sort(a.begin(),a.end());
+    for (int i=0;i<m;++i){
+        long long x;
+        cin>>x;
+        b.push_back(x);
+    }
+    sort(b.begin(),b.end());
+    int x=0,y=0;
+    while (y<m && x<n){
+        if (abs(a[x]-b[y])<=k ){
+            ++cnt;
+            ++x,++y;
+        }
+        else if (abs(a[x]-b[y])>k){
+            if (a[x]>b[y])++y;
+            else ++x;
+        }
+    }
+    cout<<cnt;
+    return 0;
+}
+/*
+THUÊ PHÒNG 
+Có 𝑛 khách đăng ký thuê phòng khách sạn. Hiện khách sạn đang có 𝑚 phòng trống. Mỗi khách đến thuê 
+đều đặt ra yêu cầu về kích thước phòng mong muốn, nếu không đáp ứng được yêu cầu thì khách sẽ từ chối 
+thuê. Yêu cầu của khách thứ 𝑖 gồm có kích thước phòng 𝑎𝑖 và biên độ 𝑘. Khi đó khách thứ 𝑖 chỉ chấp nhận 
+thuê các phòng có kích thước từ 𝑎𝑖 − 𝑘 đến 𝑎𝑖 + 𝑘. 
+Yêu cầu: Cho danh sách các yêu cầu về kích thước của từng khách và kích thước của các phòng. Hãy tìm 
+phương án phân phòng sao cho số khách thuê nhận được phòng theo đúng yêu cầu là nhiều nhất. 
+Dữ liệu: Vào từ tập tin văn bản APARTMENTS.INP - 
+Dòng đầu tiên chứa 3 số nguyên 𝑛,𝑚,𝑘(1 ≤ 𝑛,𝑚 ≤ 2 × 105;0 ≤ 𝑘 ≤ 109) – số lượng khách thuê, số 
+phòng trống và biên độ kích thước phòng mà khách thuê chấp nhận được.  - - 
+Dòng thứ hai chứa dãy gồm 𝑛 số nguyên 𝑎1,𝑎2,…,𝑎𝑛(1 ≤ 𝑎𝑖 ≤ 109) – kích thước phòng thuê theo yêu 
+cầu của từng khách. 
+Dòng thứ ba chứa dãy gồm 𝑚 số nguyên 𝑏1,𝑏2,…,𝑏𝑚(1 ≤ 𝑏𝑖 ≤ 109) – kích thước các phòng cho thuê. 
+Kết quả: Ghi ra tập tin văn bản APARTMENTS.OUT một số nguyên là số lượng nhiều nhất các khách 
+chấp nhận thuê phòng. 
+Ví dụ: 
+APARTMENTS.INP 
+4 3 5 
+60 45 80 60 
+30 60 75
+APARTMENTS.OUT 
+2
+*/
