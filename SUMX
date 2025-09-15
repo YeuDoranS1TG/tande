@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long a[100005],x;
+int n;
+vector<long long>val,place;
+int main()
+{
+    freopen("SUMX.INP","r",stdin);
+    freopen("SUMX.OUT","w",stdout);
+    //ios_base::sync_with(stdio);
+    //cin.tie(0);
+    cin>>n;
+    for (int i=0;i<n;++i){
+        cin>>a[i];
+    }
+    cin>>x;
+    sort(a,a+n);
+    place.push_back(1);
+    val.push_back(a[0]);
+    for (long long i=1;i<n;++i){
+        if (a[i]!=a[i-1]){
+            val.push_back(a[i]);
+            place.push_back(1);
+        }
+        else ++place.back();
+    }
+    long long ans=0,i=0,j=val.size()-1;
+    while (i<=j){
+        if (i==j){
+            ans+=place[i]*(place[i]-1)/2;
+            ++i,--j;
+        }
+        else if (val[i]+val[j]==x){
+            ans+=place[i]*place[j];
+            ++i,--j;
+        }
+        else if (val[i]+val[j]>x) --j;
+        else if (val[i]+val[j]<x) ++i;
+    }
+    cout<<ans;
+    return 0;
+}
+/*
+TỔNG CẶP SỐ 
+Xét dãy số nguyên dương 𝑎1,𝑎2,…,𝑎𝑛(|𝑎𝑖| ≤ 109). Với số nguyên 𝑥 cho trước (|𝑥| ≤ 109) hãy xác định 
+số cặp (𝑎𝑖,𝑎𝑗) thỏa mãn các điều kiện: - - 
+�
+�𝑖 +𝑎𝑗 = 𝑥 
+1 ≤𝑖 <𝑗≤𝑛 
+Dữ liệu: Vào từ tập tin văn bản SUMX.INP - - - 
+Dòng thứ nhất chứa số nguyên 𝑛(1 ≤ 𝑛 ≤ 105), 
+Dòng thứ hai chứa 𝑛 số nguyên 𝑎1,𝑎2,…,𝑎𝑛. 
+Dòng thứ ba chứa số nguyên 𝑥. 
+Kết quả: Đưa ra tập tin văn bản SUMX.OUT một số nguyên – số cặp tìm được. 
+Ví dụ: 
+SUMX.INP 
+9 
+5 12 7 10 9 1 2 3 11 
+13
+SUMX.OUT 
+3 
+*/
