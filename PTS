@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+long long sum=0;
+vector<long long>a,b;
+int main()
+{
+    freopen("PTS.INP","r",stdin);
+    freopen("PTS.OUT","w",stdout);
+    cin>>n>>m;
+    for(int i=0;i<n;++i){
+        long long x;
+        cin>>x;
+        a.push_back(x);
+    }
+    for (int i=0;i<m;++i){
+        long long x;
+        cin>>x;
+        b.push_back(x);
+    }
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    int x=0,y=0;
+    while (x<n && y<m){
+        if (a[x]<b[y]){
+            sum+=m-y;
+            ++x;
+        }
+        else ++y;
+    }
+    cout<<sum;
+    return 0;
+}
+/*
+THƯỞNG KẸO 
+Thầy giáo viết lên bảng 2 dãy số nguyên 𝑎1,𝑎2,…,𝑎𝑛 và 𝑏1,𝑏2,…,𝑏𝑚. Các giá trị của mỗi dãy là phân biệt 
+nhau. Thầy yêu cầu các học sinh chỉ ra các cặp (𝑎𝑖, 𝑏𝑗) thỏa 𝑎𝑖 < 𝑏𝑗, cứ mỗi cặp tìm được thì thầy sẽ thưởng 
+cho 1 cây kẹo. Bờm rất thích ăn kẹo của thầy nên cố gắng kiếm thật nhiều kẹo.  
+Yêu cầu: Hãy xác định số kẹo tối đa được thưởng. 
+Dữ liệu: Vào từ tập tin văn bản PTS.INP - - - 
+Dòng đầu tiên chứa số 𝑛,𝑚(𝑛,𝑚 ≤ 105) 
+Dòng thứ hai chứa dãy số 𝑎1,𝑎2,…,𝑎𝑛(|𝑎𝑖| ≤ 109;𝑎𝑖 ≠ 𝑎𝑗,∀𝑖 ≠ 𝑗). 
+Dòng thứ ba chứa dãy số 𝑏1,𝑏2,…,𝑏𝑚(|𝑏𝑗| ≤ 109;𝑏𝑖 ≠ 𝑏𝑗,∀𝑖 ≠ 𝑗). 
+Kết quả: Ghi ra tập tin văn bản PTS.OUT một số nguyên là số kẹo tối đa được thưởng. 
+Ví dụ: 
+PTS.INP
+2 3 
+5 7 
+5 6 9 
+PTS.OUT 
+3 
+*/
