@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n,m,a[100005],b[100005];
+struct nest{
+    int a,b;
+};
+bool ss(const nest &x, const nest &y){
+    return x.b-x.a<y.b-y.a;
+}
+int main()
+{
+    freopen("COINS.INP","r",stdin);
+    freopen("COINS.OUT","w",stdout);
+    cin>>n>>m;
+    vector<nest>qua(n);
+    for (int i=0;i<n;++i){
+        cin>>qua[i].a;
+    }
+    for (int i=0;i<n;++i){
+        cin>>qua[i].b;
+    }
+    sort(qua.begin(),qua.end(),ss);
+    for (int i=0;i<n;++i){
+        int val=qua[i].b-qua[i].a;
+        if (m>=val) m+=qua[i].a;
+    }
+    cout<<m;
+    return 0;
+}
+/*
+CÁC ĐỒNG XU 
+Steve ngồi bên cửa sổ rất lâu quan sát lũ quạ. Chúng là loài chim thông minh, rất thích các vật lóng lánh và 
+hay tha những thứ này về tổ. Hôm nay, không biết kiếm được ở đâu, chúng tha về các đồng xu. Có tất cả 𝑛 
+con quạ.  Con quạ thứ 𝑖 đã mang về 𝑎𝑖 đồng xu. Nhìn vào vị trí của tổ trên cành Steve hiểu rằng nếu có 𝑏𝑖 
+đồng xu thì tổ của quạ thứ 𝑖 sẽ bị lật rơi xuống đất và Steve sẽ nhặt được hết các đồng xu trong tổ. Steve 
+đang có trong túi 𝑚 đồng xu và có tài ném đâu trúng đó. Bây giờ chính là lúc cái tài lẻ này phát huy tác 
+dụng. 
+Yêu cầu: Hãy xác định số tiền tối đa mà Steve sẽ có được. 
+Dữ liệu: Vào từ tập tin văn bản COINS.INP: - - - 
+Dòng 1 chứa 2 số nguyên 𝑛,𝑚(1 ≤ 𝑛,𝑚 ≤ 105) 
+Dòng 2 chứa 𝑛 số 𝑎1,𝑎2,…,𝑎𝑛(0 ≤ 𝑎𝑖 ≤ 105) 
+Dòng 3 chứa 𝑛 số 𝑏1,𝑏2,…,𝑏𝑛(𝑎𝑖 < 𝑏𝑖 ≤ 105) 
+Kết quả: Ghi ra tập tin văn bản COINS.OUT số tiền tối đa mà Steve sẽ có. 
+Ví dụ: 
+COINS.OUT 
+6 
+COINS.INP 
+2 3 
+1 2 
+4 6
+*/
