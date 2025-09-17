@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    freopen("TOWERS.INP","r",stdin);
+    freopen("TOWERS.OUT","w",stdout);
+    vector<long long>a;
+    int n;
+    vector<int>v;
+    cin>>n;
+    for (int i=0;i<n;++i){
+        long long x;
+        cin>>x;
+        a.push_back(x);
+    }
+    v.push_back(a[0]);
+    long long cnt=1;
+    for (int i=1;i<n;++i){
+        auto it=upper_bound(v.begin(),v.end(),a[i]);
+        if (it==v.end()){
+            v.push_back(a[i]);
+            ++cnt;
+        }
+        else {
+            *it=a[i];
+        }
+    }
+    cout<<cnt;
+    return 0;
+}
+/*
+XÂY THÁP 
+Cho 𝑛 khối lập phương, khối thứ 𝑖 có kích thước 𝑎𝑖. Người ta sử dụng các khối lập phương để xây tháp 
+bằng cách xếp chồng lên nhau theo nguyên tắc: khối lập phương nằm trên phải có kích thước nhỏ hơn khối 
+nằm bên dưới. 
+Yêu cầu: Sử dụng các khối lập phương theo thứ tự đã cho để xây dựng tháp. Mỗi khối lập phương có thể 
+đặt lên đầu của một trong các tháp hiện có hoặc tạo thành tháp mới. Hãy tìm số tháp ít nhất xây dựng được. 
+Dữ liệu: Vào từ tập tin văn bản TOWERS.INP - 
+Dòng đầu tiên chứa số nguyên 𝑛(1 ≤ 𝑛 ≤ 2 × 105) – số lượng khối lập phương. - 
+Dòng tiếp theo chứa dãy gồm 𝑛 số nguyên 𝑎1,𝑎2,…,𝑎𝑛(1 ≤ 𝑎𝑖 ≤ 109) – kích thước các khối lập 
+phương. 
+Kết quả: Ghi ra tập tin văn bản TOWERS.OUT một số nguyên là số tháp ít nhất xây dựng được. 
+Ví dụ: 
+TOWERS.INP 
+5 
+3 8 2 1 5 
+TOWERS.OUT 
+2
+*/
