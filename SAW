@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long n,k;
+vector<long long>s,h;
+long long binarysearch(long long val){
+    long long res=lower_bound(h.begin(),h.end(),val)-h.begin();
+    if (res>n) return 0;
+    long long cnt=n-res;
+    if (res>0) return s[n-1] - s[res-1] - cnt*val;
+    else return s[n-1] - cnt*val;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    freopen("SAW.INP","r",stdin);
+    freopen("SAW.OUT","w",stdout);
+    cin>>n>>k;
+    h.resize(n);
+    long long prefixsum=0;
+    for (long long i=0;i<n;++i) cin>>h[i];
+    sort(h.begin(),h.end());
+    s.resize(n);
+    s[0]=h[0];
+    for (long long i=1;i<n;++i) s[i]=s[i-1] + h[i];
+    while (k--){
+        long long m;
+        cin>>m;
+        long long ans=0;
+        long long lo=0, hi=h.back();
+        while (lo<=hi){
+            long long mid=(lo+hi)/2;
+            long long pos=binarysearch(mid);
+            if (pos>=m){
+                ans=mid;
+                lo=mid+1;
+            }
+            else hi=mid-1;
+        }
+        cout<<ans<<" ";
+    }
+    return 0;
+}
+/*
+CƯA MÁY 
+Một hàng cây gồm 𝑛 cây đánh số từ 1 tới 𝑛, cây thứ 𝑖 có chiều cao ℎ𝑖. Người ta muốn khai thác gỗ từ những 
+cây này bằng một máy cưa. Máy cưa vận hành như sau: Trước hết phải thiết lập một độ cao Δ cho lưỡi cưa, 
+sau đó di chuyển máy cưa qua hàng cây. Mỗi khi máy cưa đi qua cây độ cao ℎ > Δ thì cây đó bị cưa còn lại 
+chiều cao Δ và người ta lấy được ℎ − Δ mét gỗ từ cây này. Dĩ nhiên những cây có độ cao ≤ Δ không bị cưa 
+và người ta không lấy được gỗ từ những cây đó. 
+Yêu cầu: Cho dãy số nguyên dương 𝑚1,𝑚2,…,𝑚𝑘. Với mỗi giá trị 𝑚𝑗, tìm số nguyên Δ𝑗 lớn nhất sao cho 
+nếu đặt độ cao của lưỡi cưa là Δ𝑗 thì tổng số mét gỗ khai thác được không ít hơn 𝑚𝑗 (𝑗 = 1,2,…,𝑘). 
+Dữ liệu: Vào từ tập tin văn bản SAW.INP - - - 
+Dòng đầu tiên chứa hai số nguyên dương 𝑛,𝑘 ≤ 105. 
+Dòng thứ hai chứa 𝑛 số nguyên dương ℎ1,ℎ2,…,ℎ𝑛(∀𝑖:ℎ𝑖 ≤ 106). 
+Dòng thứ ba chứa 𝑘 số nguyên dương 𝑚1,𝑚2,…,𝑚𝑘(∀𝑗:𝑚𝑗 ≤ ∑ ℎ𝑖
+ 𝑛
+ 𝑖=1 ) 
+Kết quả: Ghi ra tập tin văn bản SAW.OUT một dòng 𝑘 số nguyên Δ1,Δ2,…,Δ𝑘 tìm được. 
+Ví dụ: 
+SAW.INP  
+4 2 
+20 15 10 17 
+7 4 
+SAW.OUT
+15 16
+Giải thích: - - 
+Nếu đặt độ cao lưỡi cưa là 15, ta khai thác được 7m gỗ: 5 mét từ cây 1 và 2 mét từ cây 4. 
+Nếu đặt độ cao lưỡi cưa là 16, ta khai thác được 5m gỗ: 4 mét từ cây 1 và 1 mét từ cây 4. 
+*/
