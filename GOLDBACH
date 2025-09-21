@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 1000000
+int main()
+{
+    freopen("GOLDBACH.INP","r",stdin);
+    freopen("GOLDBACH.OUT","w",stdout);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    bool d[maxN+5]={false};
+    d[0]=d[1]=true;
+    for (int i=2;i*i<=maxN;++i) {
+        if (!d[i]){
+            for (int j=i*i;j<=maxN;j+=i) {
+                d[j]=true;
+            }
+        }
+    }
+    vector<int>primes;
+    for (int i=3;i<=maxN;++i) {
+        if (!d[i]) primes.push_back(i);
+    }
+    int n;
+    while(cin>>n){
+        int i=0,j=(int)primes.size()-1;
+        long long ans=1;
+        while (i<=j){
+            while (i<=j && primes[i]+primes[j]>2*n) --j;
+            if (i<=j){
+                ans+=(j-i)+1;
+                //cout<<primes[i]<<" "<<primes[j]<<endl;
+            } ++i;
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+/*
+GIẢ THUYẾT GOLDBACH 
+Giả thuyết Goldbach cho rằng tất cả các số tự nhiên chẵn lớn hơn 2 đều có thể được biểu diễn dưới dạng 
+tổng của 2 số nguyên tố. Gọi 𝐺(𝑛) là số các cách khác nhau biểu diễn số 2 × 𝑛 dưới dạng tổng 2 số nguyên 
+tố. 
+Yêu cầu: Cho 𝑛(3 ≤ 𝑛 ≤ 500000). Hãy tính 𝐹(𝑛) = 𝐺(2) + 𝐺(3) + ⋯+𝐺(𝑛). 
+Dữ liệu: Vào từ tập tin văn bản GOLDBACH.INP gồm không quá 30 bộ tests, mỗi bộ test được ghi trên 
+một dòng là số nguyên 𝑛. 
+Kết quả: Ghi ra tập tin văn bản GOLDBACH.OUT với mỗi bộ test, ghi ra trên một dòng giá trị 𝐹(𝑛) tương 
+ứng. 
+Ví dụ: 
+GOLDBACH.INP
+7 
+4 
+9 
+GOLDBACH.OUT 
+8 
+3 
+12
+- - 
+Subtask 1: 𝑛 ≤ 1000 
+Subtask 2: 𝑛 ≤ 500000.
+*/
