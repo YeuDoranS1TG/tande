@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    freopen("BUNNY.INP","r",stdin);
+    freopen("BUNNY.OUT","w",stdout);
+    unsigned long long n;
+    cin>>n;
+    unsigned long long k=n/6;
+    unsigned long long f=n%6;
+    if (n%6==0) f=1;
+    unsigned long long i=1e6;
+    unsigned long long res = (f + (k%i)*(n%6) + 3*(k%i)*((k+1)%i)) % i;
+    cout<<res;
+    return 0;
+}
+/*
+THỎ TRẮNG 
+Bằng các bước nhảy 3, 2, hoặc 1 mét chú thỏ trắng đi được một quảng đường 𝑛 mét (𝑛 ≤
+ 109). Càng đi xa càng mệt vì vậy mỗi bước nhảy tiếp theo của thỏ không lớn hơn độ dài 
+bước nhảy trước đó. 
+Yêu cầu: tính số cách thỏ có thể nhảy để đi hết quảng đường 𝑛 mét. Nếu số cách lớn hơn 
+hoặc bằng 106 thì chỉ đưa ra 6 chữ số sau cùng của số cách nhảy.  
+Ví dụ: với 𝑛 = 6 thỏ có 7 cách nhảy. 
+Dữ liệu: Vào từ tập tin văn bản BUNNY.INP gồm một số nguyên dương 𝑛. 
+Kết quả: Ghi ra tập tin văn bản BUNNY.OUT gồm một số nguyên là kết quả tương ứng 
+Ví dụ: 
+BUNNY.INP 
+6 
+BUNNY.OUT 
+7
+- - - 
+Subtask 1: 𝑛 ≤ 104 
+Subtask 2: 𝑛 ≤ 108 
+Subtask 3: 𝑛 ≤ 1015
+  */
