@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int>v,a;
+int n,cnt=0;
+void bam_nut_mot(){
+    for (int i=0;i<n;++i){
+        v[i]=(v[i]+1)%10;
+    }
+}
+string chuyenso(){
+    string val;
+    for (int i=0;i<n;++i){
+        val.push_back(char('0'+a[i]));
+    }
+    return val;
+}
+void bam_nut_hai(){
+    int res=a.back();
+    for (int i=n-1;i>0;--i){
+        a[i]=a[i-1];
+    }
+    a[0]=res;
+}
+int main()
+{
+    freopen("LOCK.INP","r",stdin);
+    freopen("LOCK.OUT","w",stdout);
+    cin>>n;
+    string s; cin>>s;
+    for (int i=0;i<n;++i){
+        int x=s[i]-'0';
+        v.push_back(x);
+    }
+    string minval(n,'9');
+    for (int solan=0;solan<10;++solan){
+        a=v;
+        for (int i=0;i<n;++i){
+            string num=chuyenso();
+            if (num<minval){
+                minval=num;
+            }
+            bam_nut_hai();
+        }
+        bam_nut_mot();
+    }
+    cout<<minval;
+    return 0;
+}
+/*
+KHÓA SỐ 
+Một hộp đen với một khóa số ở bên ngoài. Khóa số là một dãy 𝑛 chữ số nằm trong phạm vi từ 0 đến 9. Có 
+hai phím dùng để thay đổi giá trị các chữ số. Khi bấm vào phím thứ nhất thì giá trị của tất cả các chữ số trên 
+khóa tăng lên 1 (nếu chữ số đang là 9 thì sau khi bấm nó nhận giá trị 0). Khi bấm phím thứ hai thì tất cả các 
+chữ số dịch chuyển đi 1 sang bên phải (chữ số cuối cùng trở thành chữ số đầu tiên).  
+Chẳng hạn, nếu dãy số đang hiển thị là 579 thì sau khi bấm phím thứ nhất dãy số này sẽ là 680. Sau đó nếu 
+bấm phím thứ hai dãy số sẽ là 068. Hộp đen sẽ được mở khi các chữ số trên khóa số tính từ trái sang phải 
+tạo thành một số nguyên có giá trị nhỏ nhất (bỏ qua chữ số 0 vô nghĩa). 
+Yêu cầu: Xác định dãy chữ số hiển thị khi hộp được mở. 
+Dữ liệu: Vào từ tập tin văn bản LOCK.INP
+- - 
+Dòng đầu tiên chứa số nguyên 𝑛(1 ≤ 𝑛 ≤ 1000) - số chữ số trên khóa. 
+Dòng thứ hai chứa 𝑛 chữ số là dãy chữ số hiển thị ban đầu. 
+Kết quả: Ghi ra tập tin văn bản LOCK.OUT gồm một dòng chứa 𝑛 chữ số là nội dung hiển thị khi chiếc 
+hộp được mở ra. 
+Ví dụ: 
+LOCK.INP 
+4 
+2014 
+LOCK.OUT
+0142 
+*/
