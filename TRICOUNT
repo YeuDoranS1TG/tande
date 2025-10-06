@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    freopen("TRICOUNT.INP","r",stdin);
+    freopen("TRICOUNT.OUT","w",stdout);
+    int n; cin>>n;
+    unordered_map<int,int>mx,my;
+    vector<pair<int,int>>v(n);
+    for (int i=0;i<n;++i){
+        cin>>v[i].first>>v[i].second;
+        ++mx[v[i].first];
+        ++my[v[i].second];
+    }
+    long long cnt=0;
+    for (int i=0;i<n;++i){
+        int x=mx[v[i].first], y=my[v[i].second];
+        if (x>1 && y>1) cnt+=(x-1)*(y-1);
+    }
+    cout<<cnt;
+    return 0;
+}
+/*
+ĐẾM TAM GIÁC 
+Cho 𝑛 điểm trên mặt phẳng. Đếm số lượng tam giác khác nhau có 2 cạnh 
+song song với các trục tọa độ. 
+Chẳng hạn hình bên có 4 tam giác thỏa yêu cầu: (1,2,3), (1,2,4), 
+(1,3,4) và (2, 3, 4). 
+Dữ liệu: Vào từ tập tin văn bản TRICOUNT.INP 
+- - 
+Dòng đầu tiên chứa số nguyên dương 𝑛(3 ≤ 𝑛 ≤ 300 000). 
+Mỗi dòng trong 𝑛 dòng tiếp theo chứa 2 số nguyên 𝑥,𝑦(|𝑥|,|𝑦| ≤ 109) – tọa độ các điểm. 
+Kết quả: Ghi ra tập tin văn bản TRICOUNT.OUT một số nguyên là số tam giác khác nhau thỏa yêu cầu. 
+Ví dụ: 
+TRICOUNT.INP
+5 
+0 0 
+2 0 
+2 2 
+0 2 
+1 1 
+TRICOUNT.OUT
+4
+*/
