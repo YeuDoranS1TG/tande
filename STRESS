@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    freopen("STRESS.INP","r",stdin);
+    freopen("STRESS.OUT","w",stdout);
+    long long n;
+    vector<long long>v;
+    cin>>n;
+    long long m=2*n;
+    while (m>0){
+        if (m%2==0) m/=2;
+        else {
+            v.push_back(n);
+            --m;
+        }
+        --n;
+    }
+    reverse(v.begin(),v.end());
+    cout<<v.size()<<'\n';
+    for (auto x:v){
+        cout<<x<<" ";
+    }
+    return 0;
+}
+/*
+CÂN BẰNG TÂM TRẠNG 
+
+Những đêm thanh vắng, Bờm thường dành 𝑛 phút để đi dạo và suy tư về cuộc sống sinh viên ở kí túc của 
+mình. Cứ mỗi phút, trong đầu cậu lại xuất hiện một ý nghĩ về bài tập tin học hoặc nhớ người iu cũ. 
+Cứ mỗi lần suy tư, Bờm lại bị rối loạn căng thẳng. Độ căng thẳng của Bờm được biểu diễn bởi một số 
+nguyên. Giả sử tại phút thứ 𝑖, độ căng thẳng của Bờm được đo là 𝑠: 
+- Nếu nhớ về người iu cũ, Bờm sẽ giảm căng thẳng đi 1, trở thành 𝑠 − 1. 
+- Nếu nghĩ về bài tập tin học, độ căng thẳng của Bờm sẽ thay đổi thành 2 ∗ (𝑠 + 𝑖 − 2). 
+
+Trước khi đi dạo, Bờm thấy thoải mái, nghĩa là độ căng thẳng là 0. Vì không muốn bị căng thẳng đến mất 
+ngủ sau chuyến đi dạo nên Bờm muốn khi đến phút thứ 𝑛 thì vẫn cảm thấy thoải mái như lúc ban đầu. Vì 
+muốn thoải mái để sớm có người iu mới nên Bờm phải nhớ về người iu cũ với số lần là ít nhất. 
+
+Yêu cầu: Cho số nguyên 𝑛. Hãy tìm số lần ít nhất nhớ về người iu cũ sao cho khi đến phút thứ 𝑛 thì Bờm 
+cảm thấy thoải mái. 
+Dữ liệu: Vào từ tập tin văn bản STRESS.INP chứa số nguyên 𝑛(4 ≤ 𝑛 ≤ 1018) – số phút đi dạo. 
+Kết quả: Ghi ra tập tin văn bản STRESS.OUT  
+- - 
+Dòng đầu tiên ghi số nguyên 𝑘 – số lần nhớ người iu cũ. 
+Dòng tiếp theo ghi 𝑘 số nguyên tăng dần là những thời điểm Bờm nhớ người iu cũ. 
+Ví dụ: 
+STRESS.INP 
+5 
+STRESS.OUT 
+2 
+1 4 
+
+STRESS.INP 
+8 
+STRESS.OUT 
+1 
+4
+*/
