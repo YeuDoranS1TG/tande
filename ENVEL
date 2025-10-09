@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct point
+{
+    int x,y;
+};
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    freopen ("ENVEL.INP", "r" , stdin);
+    freopen ("ENVEL.OUT", "w" , stdout);
+    point a[1000005];
+    int ngang1=0, ngang2=0, doc1=0, doc2=0, xphai1=0, xphai2=0, xtrai1=0, xtrai2=0;
+    int n=0;
+    while (cin>> a[n].x>> a[n].y) ++n;
+    if (n==0) return 0;
+    ngang1=a[0].y,ngang2=a[0].y;
+    doc1= a[0].x, doc2= a[0].x;
+    xphai1= xphai2= a[0].x- a[0].y;
+    xtrai1= xtrai2= a[0].x + a[0].y;
+
+    for (int i =1; i<n; ++i)
+    {
+        doc2= max(a[i].x, doc2);
+        doc1= min(a[i].x, doc1);
+        ngang1= max(a[i].y, ngang1);
+        ngang2= min(a[i].y, ngang2);
+        int tong = a[i].x + a[i].y;
+        int hieu = a[i].x - a[i].y;
+        xphai1 = min(hieu, xphai1);
+        xphai2 = max(hieu, xphai2);
+        xtrai1 = max(tong, xtrai1);
+        xtrai2 = min(tong, xtrai2);
+    }
+
+    int Bx= xphai2+ ngang2,Ay= ngang2,By= ngang2,Ax= xtrai2- ngang2;
+    cout<< Ax<< " "<< Ay << '\n';
+    if( Ax != Bx) cout << Bx << " " <<By<<'\n';
+
+    int Cx = doc2,Dx = doc2,Cy = doc2- xphai2,Dy= xtrai1 - doc2;
+    if (Bx != Cx && By != Cy) cout << Cx << " " << Cy<< '\n';
+    if( Cy != Dy) cout << Dx<<" " << Dy<< '\n';
+
+    int Ex = xtrai1 - ngang1,Ey = ngang1,Fy= ngang1,Fx= xphai1 + ngang1;
+    if( Dx != Ex && Dy != Ey) cout << Ex <<" " << Ey <<'\n';
+    if( Ex != Fx) cout << Fx<< " "<< Fy<< '\n';
+
+    int Gy= doc1 - xphai1,Gx = doc1,Hx= doc1,Hy= xtrai2 - doc1;
+    if ( Fx != Gx && Fy != Gy) cout << Gx<< " " << Gy<<'\n';
+    if( Gy != Hy && Ax != Hx && Ay != Hy) cout << Hx<< " " <<Hy<< '\n';
+    return 0;
+}
+/*
+BAO LỒI CHUẨN 
+Bao lồi chuẩn của 𝑛 điểm cho trước là đa giác lồi diện tích nhỏ nhất chứa 
+các điểm đã cho (bên trong, trên cạnh hay ở đỉnh) và có các cạnh song song 
+với trục tọa độ hoặc làm thành một góc 450 với trục tọa độ. 
+Cho 𝑛(1 ≤ 𝑛 ≤ 106) điểm với các tọa độ nguyên (𝑥𝑖,𝑦𝑖) (0 ≤ 𝑥𝑖,𝑦𝑖 ≤ 1000). Các điểm có thể trùng nhau. 
+
+Yêu cầu: Hãy xác định bao lồi chuẩn của các đỉnh đã cho bằng cách chỉ ra 
+các đỉnh của nó theo trình tự nối ngược chiều kim đồng hồ. 
+Dữ liệu: Vào từ tập tin văn bản ENVEL.INP, mỗi dòng chứa 2 số nguyên là tọa độ một điểm. 
+Kết quả: Ghi ra tập tin văn bản ENVEL.OUT tọa độ đỉnh của bao lồi chuẩn theo trình tự ngược chiều kim 
+đồng hồ, mỗi dòng chứa 2 số nguyên là tọa độ một đỉnh. 
+Ví dụ: 
+ENVEL.INP 
+3  3 
+3  1 
+2  2 
+4  2 
+3  2
+ENVEL.OUT 
+3  1 
+4  2 
+3  3 
+2  2 
+*/
