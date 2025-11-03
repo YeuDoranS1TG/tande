@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int maxN=1e5;
+int t,n;
+vector<int>v[maxN];
+bool visited[maxN+5];
+map<int,int>a;
+void bfs(int j){
+    visited[j]=true;
+    a[j]=1;
+    queue<int>q;
+    q.push(j);
+    while (!q.empty()){
+        int u=q.front();
+        q.pop();
+        for (auto x:v[u]){
+            if (!visited[x]){
+                a[x]=3-a[u];
+                visited[x]=true;
+                q.push(x);
+            }
+        }
+    }
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    freopen("FIGHTERS.INP","r",stdin);
+    freopen("FIGHTERS.OUT","w",stdout);
+    cin>>t;
+    while (t--){
+        cin>>n;
+        int val=-1;
+        a.clear();
+        for (int i=0;i<n;++i){
+            int x,y;
+            cin>>x>>y;
+            v[x].push_back(y);
+            v[y].push_back(x);
+            val=max(val,max(x,y));
+        }
+        fill_n(visited,n+5,false);
+        for (int i=1;i<=n;++i){
+            if (!visited[i]) bfs(i);
+        }
+        int red=0,blue=0;
+        for (int i=1;i<=val;++i){
+            if (a[i]==1) ++red;
+            else ++blue;
+        }
+        cout<<max(red,blue);
+    }
+    return 0;
+}
+
