@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 200000
+long long n,m;
+vector<long long>v[maxN];
+vector<long long>a;
+bool visited[maxN];
+long long bfs(long long j){
+    long long res=1;
+    queue<long long>q;
+    q.push(j);
+    visited[j]=true;
+    while (!q.empty()){
+        long long u=q.front();
+        q.pop();
+        for (auto x:v[u]){
+            //cout<<x<<'\n';
+            if (!visited[x] && (long long)v[x].size()<=2){
+                //cout<<res<<" ";
+                ++res;
+                visited[x]=true;
+                q.push(x);
+            }
+        }
+    }
+    return res;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    freopen("GTAIL.INP","r",stdin);
+    freopen("GTAIL.OUT","w",stdout);
+    cin>>n>>m;
+    for (long long i=0;i<m;++i){
+        long long x,y;
+        cin>>x>>y;
+        v[x].push_back(y);
+        v[y].push_back(x);
+    }
+    fill_n(visited,n+5,false);
+    for (long long i=1;i<=n;++i){
+        if ((long long)v[i].size()==1) a.push_back(i);
+    }
+    long long ans=0;
+    for (long long i=0;i<(long long)a.size();++i){
+        //cout<<a[i]<<" ";
+        long long val=bfs(a[i]);
+        //cout<<val<<'\n';
+        ans=max(ans,val);
+    }
+    cout<<ans;
+    return 0;
+}
+
