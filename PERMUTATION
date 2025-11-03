@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 20
+#define ull unsigned long long
+int n;
+ull k;
+//bool visited[maxN+5];
+vector<int>v,ans;
+ull fact[maxN+5];
+void giai_thua(){
+    //ans.resize(n);
+    fact[0]=1;
+    for (int i=1;i<=20;++i){
+        fact[i]=fact[i-1]*i;
+    }
+    for (int i=0;i<=n;++i) v.push_back(i);
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    freopen("PERMUTATION.INP","r",stdin);
+    freopen("PERMUTATION.OUT","w",stdout);
+    cin>>n>>k;
+    //memset(visited,false,n+1);
+    giai_thua();
+    for (int i=1;i<=n;++i){
+        ull b=(n-i>20?fact[20]:fact[n-i]);
+        ull pos = (k-1)/b + 1;
+        k = (k-1)%b + 1;
+        //cout<<pos<<" ";
+        if (pos>=v.size()){
+            cout<<-1<<'\n';
+            return 0;
+        }
+        ull res = v[pos];
+        ans.push_back(res);
+        v.erase(v.begin()+pos);
+        //cout<<k<<'\n';
+    }
+    for (auto z:ans) cout<<z<<" ";
+    return 0;
+}
