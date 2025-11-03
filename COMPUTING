@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 200000
+long long a[maxN+5];
+vector<int>v;
+int n,k;
+int checkleft(int j){
+    if (j>=k) return k;
+    return j;
+}
+int checkright(int j){
+    if (n-j>k) return k;
+    return n-j-1;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    //freopen("COMPUTING.INP","r",stdin);
+    //freopen("COMPUTING.OUT","w",stdout);
+    cin>>n>>k;
+    long long maxval=LLONG_MIN;
+    long long tong=0;
+    for (int i=0;i<n;++i){
+        cin>>a[i];
+        maxval=max(maxval,a[i]);
+        tong+=a[i];
+    }
+    for (int i=0;i<n;++i){
+        if (a[i]==maxval){
+            v.push_back(i);
+        }
+    }
+    int m=v.size();
+    long long ans=LLONG_MIN;
+    //cout<<tong<<'\n';
+    for (int i=0;i<m;++i){
+        long long tong1=tong-maxval;
+        cout<<tong1<<'\n';
+        int res=v[i];
+        int left=checkleft(res);
+        int right=checkright(res);
+        long long sum=(long long)(1+left+right)*maxval;
+        cout<<left<<" "<<right<<'\n';
+        cout<<sum<<'\n';
+        while (res>=left && left>0){
+            int x=res-left;
+            tong1-=a[x];
+            ++left;
+        } cout<<tong1<<'\n';
+        int pos=1;
+        while (pos<=right){
+            cout<<pos<<'\n';
+            tong1-=a[res+pos];
+            ++pos;
+        } cout<<tong1<<'\n';
+        ans=max(ans,tong1+sum);
+    }
+    cout<<ans;
+    return 0;
+}
