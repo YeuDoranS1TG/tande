@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100000
+vector<pair<int,int>>v[maxN+5];
+int n,m;
+bool ok=false;
+int color[maxN+5],par[maxN+5];
+int start,stop;
+bool dfs(int u){
+    color[u]=1;
+    for (auto &pos:v[u]){
+        int res=pos.first;
+        if (color[res]==0){
+            par[res]=u;
+            if (dfs(res)) return true;
+        }
+        else if (color[res]==1){
+            start=res;
+            stop=u;
+            return true;
+        }
+    }
+    color[u]=2;
+    return false;
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(nullptr);
+    freopen("CIRCUIT.INP","r",stdin);
+    freopen("CIRCUIT.OUT","w",stdout);
+    cin>>n>>m;
+    for (int i=0;i<m;++i){
+        int x,y;
+        cin>>x>>y;
+        v[x].push_back({y,i+1});
+    }
+    //memset(visited,false,sizeof(visited));
+    for (int i=1;i<=n;++i){
+        if (!ok && color[i]==0){
+            ok=dfs(i);
+        }
+    }
+    if (!ok){ cout<<"NO"; return 0; }
+    cout<<"YES"<<'\n';
+
+    vector<int>nodes;
+    int x = stop;
+    while (true) {
+        nodes.push_back(x);
+        if (x == start) break;
+        x = par[x];
+    }
+    reverse(nodes.begin(), nodes.end());
+    //nodes.push_back(start);
+    vector<int>cycle;
+    for (int i=0;i+1<(int)nodes.size(); ++i) {
+        int u=nodes[i], g=nodes[i+1];
+        for (auto &pos:v[u]) {
+            if (pos.first==g) {
+                cycle.push_back(pos.second);
+                break;
+            }
+        }
+    }
+    for (auto &pos:v[stop]) {
+        if (pos.first == start) {
+            cycle.push_back(pos.second);
+            break;
+        }
+    }
+    //reverse(cycle.begin(),cycle.end());
+    for (auto ha:cycle) cout<<ha<<" ";
+    return 0;
+}
