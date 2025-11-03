@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    //freopen("WEIRD.INP","r",stdin);
+    //freopen("WEIRD.OUT","w",stdout);
+    int n;
+    while (cin>>n){
+        int res=n-1;
+        long long start=1;
+        while (res--){
+            start*=10;
+        }
+        long long stop=start*10;
+        for (long long i=start;i<stop;++i){
+            long long val=i*i;
+            long long sum1=val%stop,sum2=val/stop;
+            if (sum1+sum2==i) cout<<i<<" ";
+        }
+    }
+    return 0;
+}
