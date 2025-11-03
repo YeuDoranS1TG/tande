@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 1000000
+int n; long long k;
+bool visited[maxN+5]={false};
+vector<long long>a;
+int binarysearch(long long val){
+    int lo=0, hi=n-1, answer=-1;
+    while (lo<=hi){
+        int mid=(lo+hi)/2;
+        if (a[mid]>=val){
+            answer=mid;
+            hi=mid-1;
+        }
+        else {
+            lo=mid+1;
+        }
+    }
+    //cout<<answer<<'\n';
+    return answer;
+}
+int hopqua(int x){
+    int it=binarysearch(a[x]-k);
+    if (it<0 || it>=n) return 1;
+    while (it>=0 && (long long)a[it]>a[x]-k) --it;
+    while (it>=0 && visited[it])--it;
+    if (it==-1) return 1;
+    visited[it]=true;
+    //cout<<it<<'\n';
+    return it;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    freopen("NBES.INP","r",stdin);
+    freopen("NBES.OUT","w",stdout);
+    cin>>n>>k;
+    for (int i=0;i<n;++i){
+        long long x;
+        cin>>x;
+        a.push_back(x);
+    }
+    sort(a.begin(),a.end());
+    vector<long long>ans;
+    for (int i=n-1;i>=0;--i){
+        if (visited[i]) continue;
+        visited[i]=true;
+        int res=hopqua(i);
+        while (res>1){
+            res=hopqua(res);
+        }
+        ans.push_back(a[i]);
+    }
+    long long sum=0;
+    for (auto z:ans) sum+=z;
+    cout<<sum;
+    return 0;
+}
