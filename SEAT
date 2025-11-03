@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100000
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    //freopen("SEAT.INP","r",stdin);
+    //freopen("SEAT.OUT","w",stdout);
+    int n;
+    cin>>n;
+    int a[maxN+5];
+    unordered_map<int,int>mp;
+    for (int i=0;i<n;++i){
+        cin>>a[i];
+        ++mp[a[i]];
+    }
+    int cnt=mp[4];
+    //cout<<cnt<<'\n';
+    int ba=mp[3],hai=mp[2],mot=mp[1];
+    cnt+=mp[3];
+    //cout<<cnt<<'\n';
+    if (mp[3]<mp[1]) mp[1]-=mp[3];
+    else if (mp[3]>=mp[1]) mp[1]=0;
+
+    cnt+=(mp[2]+1)/2;
+    //cout<<cnt<<'\n';
+    if (mp[1]<=2){
+        cout<<cnt;
+        return 0;
+    }
+    else if (mp[1]>2){
+        mp[1]-=2;
+        cnt+=(mp[1]+3)/4;
+    }
+    cout<<cnt;
+    return 0;
+}
