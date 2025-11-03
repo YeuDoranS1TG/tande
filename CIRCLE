@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long n;
+struct point{ int x,y; };
+long long khoangcach(int x, int y){
+    return x*x+y*y;
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    //freopen("CIRCLE.INP","r",stdin);
+    //freopen("CIRCLE.OUT","w",stdout);
+    cin>>n;
+    point a[n+5],b[n+5];
+    vector<long long>v,u;
+    for (int i=0;i<n;++i){
+        cin>>a[i].x>>a[i].y;
+        long long dist=khoangcach(a[i].x,a[i].y);
+        v.push_back(dist);
+    }
+    for (int i=0;i<n;++i){
+        cin>>b[i].x>>b[i].y;
+        long long dist=khoangcach(b[i].x,b[i].y);
+        u.push_back(dist);
+    }
+    sort(v.begin(),v.end());
+    sort(u.begin(),u.end());
+    int i=0,j=0;
+    while (i<n-1 && j<n-1){
+        if (v[i]<u[j+1] && u[j]<v[i+1]) break;
+        ++i,++j;
+    }
+    cout<<fixed<<setprecision(6)<<(long double)sqrt(max(v[i],u[j]));
+    return 0;
+}
