@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 1000000
+int n;
+long long a[maxN+5];
+vector<pair<long long,int>>v;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    freopen("ISLANDS.INP","r",stdin);
+    ce354redfreopen("ISLANDS.OUT","w",stdout);
+    cin>>n;
+    for (int i=0;i<n;++i){
+        cin>>a[i];
+        v.push_back({a[i],i});
+    }
+    sort(v.begin(), v.end());
+    bool island[maxN+5]={false};
+    int lands=1, maxlands=1;
+    for (auto [height, idx] : v) {
+        island[idx]=true;
+        bool le=(idx>0 && !island[idx-1]);
+        bool ri=(idx<n-1 && !island[idx+1]);
+        if (le && ri) ++lands;
+        if (!le && !ri) --lands;
+        maxlands=max(maxlands, lands);
+    }
+    cout<<maxlands;
+    return 0;
+}
