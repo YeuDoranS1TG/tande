@@ -1,56 +1,68 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxN=1e5;
-int t,n;
-vector<int>v[maxN];
+#define maxN 100000
+vector<int>v[maxN+5];
 bool visited[maxN+5];
-map<int,int>a;
-void bfs(int j){
-    visited[j]=true;
-    a[j]=1;
-    queue<int>q;
-    q.push(j);
-    while (!q.empty()){
-        int u=q.front();
-        q.pop();
-        for (auto x:v[u]){
-            if (!visited[x]){
-                a[x]=3-a[u];
-                visited[x]=true;
+int a[maxN+5];
+pair<int,int> bfs(int start) {
+    int cnt1 = 0, cnt2 = 0;
+    queue<int> q;
+    visited[start] = true;
+    q.push(start);
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        if (a[u] == 1) ++cnt1;
+        else if (a[u] == 2) ++cnt2;
+
+        for (auto x : v[u]) {
+            if (!visited[x]) {
+                a[x] = 3 - a[u];
+                visited[x] = true;
                 q.push(x);
             }
         }
     }
+    return {cnt1, cnt2};
 }
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr); cout.tie(nullptr);
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
     freopen("FIGHTERS.INP","r",stdin);
     freopen("FIGHTERS.OUT","w",stdout);
+    int t;
     cin>>t;
     while (t--){
+        int n;
         cin>>n;
         int val=-1;
-        a.clear();
-        for (int i=0;i<n;++i){
+        vector<pair<int, int>>d;
+        d.reserve(n);
+        for (int i=0;i<n;++i) {
             int x,y;
             cin>>x>>y;
+            d.push_back({x,y});
+            val = max(val,max(x,y));
+        }
+        for (int i=0;i<=val;++i) {
+            v[i].clear();
+            visited[i]=false;
+            a[i]=0;
+        }
+        for (auto [x, y] : d) {
             v[x].push_back(y);
             v[y].push_back(x);
-            val=max(val,max(x,y));
         }
-        fill_n(visited,n+5,false);
-        for (int i=1;i<=n;++i){
-            if (!visited[i]) bfs(i);
-        }
-        int red=0,blue=0;
+        fill(visited,visited+val+1,false);
+        long long ans=0;
         for (int i=1;i<=val;++i){
-            if (a[i]==1) ++red;
-            else ++blue;
+            if (!visited[i] && !v[i].empty()) {
+                a[i]=1;
+                pair<int,int> p = bfs(i);
+                ans += max(p.first, p.second);
+            }
         }
-        cout<<max(red,blue);
+        cout<<ans<<'\n';
     }
     return 0;
 }
-
