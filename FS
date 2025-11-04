@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long s;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    freopen("FS.INP","r",stdin);
+    freopen("FS.OUT","w",stdout);
+    cin>>s;
+    int resx,resy;
+    bool ok=false;
+    for(long long x=1;x*x<=s;++x) {
+    long long y2=s-x*x;
+    long long y=sqrt(y2);
+    if (y*y==y2){
+        resx=x;
+        resy=y;
+        ok=true;
+        break;
+    }
+}
+    if (!ok){
+        cout<<"Impossible";
+        return 0;
+    }
+    vector<pair<int,int>>a;
+    if (resx>resy) swap(resx,resy);
+    a.push_back({0,resx});
+    a.push_back({0+resx,resx+resy});
+    a.push_back({resy+resx,0+resy});
+    a.push_back({resy,0});
+    for (auto &v:a) cout<<v.first<<" "<<v.second<<'\n';
+    return 0;
+}
+
