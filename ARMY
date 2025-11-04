@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 200005
+int n,m;
+long long ar;
+vector<long long>val;
+vector<int>v[maxN];
+bool check(long long value){
+    vector<long long>best(n+1,-1);
+    queue<pair<int,long long>>q;
+    long long start = (ar > val[1]) ? ar : ar / 2;
+    best[1] = start;
+    q.push({1, start});
+    while (!q.empty()){
+        auto [x,y]=q.front(); q.pop();
+        for (auto &pos:v[x]){
+            long long arleft=(y>val[pos])?y:y/2;
+            if (arleft>=value && arleft>best[pos]){
+                best[pos]=arleft;
+                q.push({pos,arleft});
+            }
+        }
+    }
+    return best[n]>=value;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    freopen("ARMY.INP","r",stdin);
+    freopen("ARMY.OUT","w",stdout);
+    cin>>n>>m;
+    for (int i=0;i<m;++i){
+        int x,y;
+        cin>>x>>y;
+        v[x].push_back(y);
+        v[y].push_back(x);
+    }
+    cin>>ar;
+    val.resize(n+1);
+    for (int i=1;i<=n;++i) cin>>val[i];
+    long long lo=0,hi=ar,ans=0;
+    while (lo<=hi){
+        long long mid=(lo+hi)/2;
+        //cout<<mid<<" ";
+        if (check(mid)){
+            ans=max(ans,mid);
+            lo=mid+1;
+            //cout<<mid<<'\n';
+        }
+        else hi=mid-1;
+    }
+    cout<<ans;
+    return 0;
+}
