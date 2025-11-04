@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100005
+int n;
+long long k,t,m;
+long long a[maxN];
+vector<long long>pfs;/*
+bool check(int val){
+
+}*/
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    //freopen("ELEVATOR.INP","r",stdin);
+    //freopen("ELEVATOR.OUT","w",stdout);
+    cin>>n>>k>>t>>m;
+    pfs.push_back(0);
+    for (int i=1;i<=n;++i){
+        cin>>a[i];
+        pfs.push_back(pfs.back()+a[i]);
+    }
+    long long lo=pfs[1],hi=pfs.back();
+    //cout<<lo<<" "<<hi<<'\n';
+    long long ans=0;
+    while (lo<=hi){
+
+        long long mid=(lo+hi)/2;
+        long long val=mid;
+        long long id=lower_bound(pfs.begin(),pfs.end(),val)-pfs.begin();
+        long long time=0;
+        while (id>0 && id<=n){
+            //cout<<id<<'\n';
+            time+=2*id*t;
+            //cout<<time<<" ";
+            long long du=0;
+            long long amt=0;
+            if (pfs[(unsigned long)id]>val){
+                du=val-pfs[(unsigned long)id-1];
+                --id;
+            }
+            //cout<<du<<" "<<id<<'\n';
+            amt=k-du;
+            //cout<<amt<<" ";
+            val=pfs[(unsigned long)id]-amt;
+            //cout<<val<<'\n';
+            id=lower_bound(pfs.begin(),pfs.end(),val)-pfs.begin();
+        }
+        if (time<=m){
+            ans=max(ans,mid);
+            lo=mid+1;
+        }
+        else hi=mid-1;
+        //break;
+    }
+    cout<<ans<<" ";
+    return 0;
+}
+
