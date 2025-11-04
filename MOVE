@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 205
+vector<int>v[maxN];
+int n,a,b;
+int pre[maxN];
+vector<int>tem;
+bool bfs(int mi){
+    bool visited[maxN+5];
+    memset(visited,false,sizeof(visited));
+    memset(pre, -1, sizeof(pre));
+    queue<int>q;
+    q.push(a);
+    visited[a]=true;
+    while (!q.empty()){
+        int u=q.front();q.pop();
+        for (auto &pos:v[u]){
+            if (!visited[pos]){
+                if (abs((int)tem[pos]-(int)tem[u])<=mi){
+                    visited[pos]=true;
+                    pre[pos]=u;
+                    q.push(pos);
+                }
+            }
+        }
+    }
+    return visited[b];
+}
+void output(int val){
+    cout<<val<<'\n';
+    bfs(val);
+    vector<int>ans;
+    for (int x=b;x!=-1;x=pre[x]) ans.push_back(x);
+    reverse(ans.begin(),ans.end());
+    for (auto &res:ans) cout<<res<<" ";
+}
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    freopen("MOVE.INP","r",stdin);
+    freopen("MOVE.OUT","w",stdout);
+    cin>>n>>a>>b;
+    tem.resize(n + 1);
+    for (int i=1;i<=n;++i){
+        cin>>tem[i];
+    }
+    int x,y;
+    while (cin>>x>>y){
+        v[x].push_back(y);
+        v[y].push_back(x);
+        //lo=min(lo,min(x,y));
+        //hi=max(hi,max(x,y));
+    }
+    int lo=0,hi=0;
+    for (int i=1;i<=n;++i)
+        for (int j:v[i])
+            hi=max(hi,abs(tem[i] - tem[j]));
+    int best=-1;
+    while (lo<=hi){
+        int mid=(hi+lo)/2;
+        if (bfs(mid)){
+            best=mid;
+            hi=mid-1;
+        }
+        else lo=mid+1;
+    }
+    if (best==-1)
+        cout<<-1;
+    else output(best);
+    return 0;
+}
