@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct state {
+    int a, b, c;
+    int d, e, f, g;
+    int h, i, j;
+
+    state() : a(1), b(2), c(3), d(8), e(0), f(0), g(4), h(7), i(6), j(5) {}
+    state(int a1, int b1, int c1, int d1, int e1, int f1, int g1, int h1, int i1, int j1)
+        : a(a1), b(b1), c(c1), d(d1), e(e1), f(f1), g(g1), h(h1), i(i1), j(j1) {}
+
+    bool operator==(const state& other) const {
+        return a==other.a && b==other.b && c==other.c &&
+               d==other.d && e==other.e && f==other.f &&
+               g==other.g && h==other.h && i==other.i && j==other.j;
+    }
+
+    state rotated1() const {
+        array<int,6> vals = {a,b,f,i,h,d};
+        rotate(vals.rbegin(), vals.rbegin()+1, vals.rend());
+        return state(vals[0], vals[1], c, vals[5], e, vals[2], g, vals[4], vals[3], j);
+    }
+
+    state rotated2() const {
+        array<int,6> vals = {b,c,g,j,i,e};
+        rotate(vals.rbegin(), vals.rbegin()+1, vals.rend());
+        return state(a, vals[0], vals[1], d, vals[5], f, vals[2], h, vals[4], vals[3]);
+    }
+};
+
+const int MAXN = 3628800 + 5;
+int factorial[11];
+
+void initFactorial() {
+    factorial[0]=1;
+    for(int i=1;i<=10;i++) factorial[i] = factorial[i-1]*i;
+}
+
+int encode(const state& s) {
+    int vals[10] = {s.a,s.b,s.c,s.d,s.e,s.f,s.g,s.h,s.i,s.j};
+    int id = 0;
+    for(int i=0;i<10;i++){
+        int smaller = 0;
+        for(int j=i+1;j<10;j++) if(vals[j]<vals[i]) smaller++;
+        id += smaller * factorial[9-i];
+    }
+    return id;
+}
+
+bool vis[MAXN];
+int dist[MAXN];
+state ans = state();
+
+long long bfs(state s) {
+    memset(vis,0,sizeof(vis));
+    queue<state> q;
+    int start = encode(s);
+    int target = encode(ans);
+    vis[start] = true;
+    dist[start] = 0;
+    q.push(s);
+
+    while(!q.empty()){
+        state u = q.front(); q.pop();
+        int idu = encode(u);
+
+        if(idu == target) return dist[idu];
+
+        state v1 = u.rotated1();
+        int id1 = encode(v1);
+        if(!vis[id1]){
+            vis[id1]=true;
+            dist[id1]=dist[idu]+1;
+            q.push(v1);
+        }
+
+        state v2 = u.rotated2();
+        int id2 = encode(v2);
+        if(!vis[id2]){
+            vis[id2]=true;
+            dist[id2]=dist[idu]+1;
+            q.push(v2);
+        }
+    }
+    return -1;
+}
+
+int main(){
+    freopen("HEXAGAME.INP","r",stdin);
+    freopen("HEXAGAME.OUT","w",stdout);
+    initFactorial();
+
+    state st;
+    cin>>st.a>>st.b>>st.c;
+    cin>>st.d>>st.e>>st.f>>st.g;
+    cin>>st.h>>st.i>>st.j;
+
+    cout<<bfs(st)<<endl;
+}
