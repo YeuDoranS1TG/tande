@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 3628805
+long long fact[11];
+//bool vis[maxN];
+bool vis[maxN]={false};
+array<int,10>ans1={1,2,3,8,0,9,4,7,6,5};
+array<int,10>ans2={1,2,3,8,9,0,4,7,6,5};
+void giai_thua(){
+    fact[0]=1;
+    for (int i=1;i<=10;++i){
+        fact[i]=fact[i-1]*i;
+    }
+    //fill(pre,pre+maxN,-1);
+}
+long long GetOrder(const array<int,10>& v){
+    bool used[10] = {0};
+    long long k = 0;
+    for(int i=0;i<10;i++){
+        //if(v[i]==0) continue;
+        int smaller = 0;
+        for(int j=0;j<v[i];j++)
+            if(!used[j]) smaller++;
+        k += smaller * fact[9-i];
+        used[v[i]] = true;
+    }
+    return k;
+}
+array<int,10> rotated1(array<int,10> c){
+    array<int,6> vals = {c[0], c[1], c[5], c[8], c[7], c[3]};
+    rotate(vals.rbegin(), vals.rbegin() + 1, vals.rend());
+    array<int,10> res = c;
+    res[0]=vals[0]; res[1]=vals[1]; res[5]=vals[2];
+    res[8]=vals[3]; res[7]=vals[4]; res[3]=vals[5];
+    return res;
+}
+array<int,10> rotated2(array<int,10> c){
+    array<int,6> vals = {c[1], c[2], c[6], c[9], c[8], c[4]};
+    rotate(vals.rbegin(), vals.rbegin() + 1, vals.rend());
+    array<int,10> res = c;
+    res[1]=vals[0]; res[2]=vals[1]; res[6]=vals[2];
+    res[9]=vals[3]; res[8]=vals[4]; res[4]=vals[5];
+    return res;
+}
+int bfs(const array<int,10>& start){
+    long long rs=GetOrder(start);
+    queue<pair<array<int,10>,int>> q;
+    q.push({start,0});
+    bool ok=false;
+    while (!q.empty()){
+        auto u=q.front(); q.pop();
+        long long cur=GetOrder(u.first);
+        if (u.first==ans1||u.first==ans2) return u.second;
+
+        auto v1=rotated1(u.first);
+        auto v2=rotated2(u.first);
+        long long o1=GetOrder(v1);
+        long long o2=GetOrder(v2);
+
+        if (!vis[o1]){
+            q.push({v1,u.second+1});
+            vis[o1]=true;
+        }
+        if (!vis[o2]){
+            q.push({v2,u.second+1});
+            vis[o2]=true;
+        }
+        if(!ok){
+            for (int i=0;i<10;++i){
+                if (v1[i]==0) v1[i]=9;
+                else if (v1[i]==9) v1[i]=0;
+                if (v2[i]==0) v2[i]=9;
+                else if (v2[i]==9) v2[i]=0;
+            }
+            int pos1=GetOrder(v1);
+            if (!vis[pos1]){
+                q.push({v1,u.second+1});
+                vis[pos1]=true;
+            }
+            int pos2=GetOrder(v2);
+            if (!vis[pos2]){
+                q.push({v2,u.second+1});
+                vis[pos2]=true;
+            }
+            ok=true;
+        }
+    }
+    return -1;
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    freopen("HEXAGAME.INP","r",stdin);
+    freopen("HEXAGAME.OUT","w",stdout);
+    giai_thua();
+    array<int,10>a;
+    for (int i=0;i<10;++i){
+        cin>>a[i];
+    }
+    bool firstZero = false;
+    for (int i = 0; i < 10; i++) {
+        if (a[i] == 0) {
+            if (!firstZero) firstZero = true;
+            else a[i] = 9;
+        }
+    }
+    cout<<bfs(a);
+    return 0;
+}
