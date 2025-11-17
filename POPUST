@@ -1,0 +1,101 @@
+/*#include<bits/stdc++.h>
+using namespace std;
+#define maxN 500000
+int n;
+bool ss(const pair<long long,long long>&x, const pair<long long,long long>&y){
+    if (x.second!=y.second) return x.second<y.second;
+    return x.first<y.first;
+}
+long long pfs[maxN];
+int main(){
+    //freopen("POPUST.INP","r",stdin);
+    //freopen("POPUST.OUT","w",stdout);
+    cin>>n;
+    vector<pair<long long,long long>>v;
+    v.push_back({0,0});
+    for (int i=0;i<n;++i){
+        long long b,c;
+        cin>>b>>c;
+        v.push_back({b,c});
+    }
+    sort(v.begin(),v.end(),ss);
+    pfs[0]=0;
+    for (int i=0;i<n;++i){
+        pfs[i+1]=pfs[i]+v[i].second;
+    }
+    //pfs[n+1]=pfs[n];
+    vector<pair<long long,int>> minval(n);
+    minval[n]={v[n-1].first,n};
+    for (int i=n-1;i>=0;++i){
+        if (v[i].first>=minval[i+1].first){
+            minval[i] = minval[i+1];
+        }
+        else {
+            minval[i] = {v[i].first,i+1};
+        }
+    }
+    for (int k=1;k<=n;++k){
+        if (k==1){
+            cout<<minval[n-1].first<<'\n';
+            continue;
+        }
+        //cout<<k<<'\n';
+        /*
+        if (k == n){
+            cout << pfs[n]-v[minval[n-1].second].second+minval[n-1].first << '\n';
+            continue;
+        }
+        long long ans1=1e18;
+        if (minval[k-1].first<v[k-1].first){
+            ans1=pfs[k]-v[minval[k-1].second].second+minval[k-1].first;
+            //cout<<ans1<<" "<<pfs[k+1]<<" "<<minval[k-1].second<<" "<<minval[k-1].first<<'\n';
+        }
+        long long ans2=pfs[k-1]+v[].first;
+        //cout<<ans2<<" "<<pfs[k-1]<<" "<<minval[k-1].first<<'\n';
+        cout<<min(ans1,ans2)<<'\n';
+    }
+    return 0;
+}*/
+#include <bits/stdc++.h>
+using namespace std;
+bool ss (const pair<long long,long long>& x, const pair<long long,long long>& y) {\
+    if (x.second==y.second) return x.first<y.first;
+    return x.second<y.second;
+}
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    freopen("POPUST.INP","r", stdin);
+    freopen("POPUST.OUT","w", stdout);
+    long long n;
+    cin>>n;
+    pair<long long,long long>a[n + 1];
+    long long prefix[n + 1];
+    prefix[0]=0;
+    long long ans[n+1];
+    fill_n(ans,n+1,0LL);
+    ans[0]=(long long)1e18;
+    for(long long i=0; i<n; ++i) {
+        cin >> a[i].first >> a[i].second;
+    }
+    sort(a, a+n, ss);
+    for(long long i=0; i<n; ++i) {
+        prefix[i+1]= prefix[i]+a[i].second;
+        ans[i+1] = min(ans[i],a[i].first - a[i].second);
+    }
+    long long suf[n+1];
+    fill_n(suf, n+1, 0LL);
+    suf[n]=(long long)1e18;
+    for(long long i=n-1; i>=0;--i) {
+        suf[i] = min(suf[i+1], a[i].first);
+    }
+    cout << suf[0] << '\n';
+    long long dem[n+1];
+    fill_n(dem, n+1, 0LL);
+    dem[0] = suf[0];
+    for(long long i = 1; i < n; ++i) {
+        dem[i] = min(suf[i] + prefix[i], prefix[i+1] + ans[i]);
+        cout << dem[i] << '\n';
+    }
+}
+
