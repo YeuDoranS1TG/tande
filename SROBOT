@@ -59,3 +59,75 @@ int main() {
         if (!ok) cout<<"NO"<<'\n';
     }
 }
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define maxN 100
+int nR[maxN+5],nL[maxN+5],nD[maxN+5],nU[maxN+5];
+void direction(int na[], int nb[], int nc[], int nd[], int i){
+    na[i+1]=na[i]+1;
+    nb[i+1]=nb[i];
+    nc[i+1]=nc[i];
+    nd[i+1]=nd[i];
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    //freopen("SROBOT.INP","r",stdin);
+    //freopen("SROBOT.OUT","w",stdout);
+	long long x,y;
+    while(cin>>x>>y){
+        string s;
+        cin>>s;
+        int n=(int)s.size();
+        nR[0]=0, nL[0]=0, nD[0]=0, nU[0]=0;
+        for (int i=0;i<n;++i){
+            char c=s[i];
+            if (c=='R')
+                direction(nR,nL,nD,nU,i);
+            else if (c=='U')
+                direction(nU,nR,nL,nD,i);
+            else if (c=='D')
+                direction(nD,nL,nU,nR,i);
+            else direction(nL,nU,nD,nR,i);
+        }
+        ll dx=nR[n]-nL[n];
+        ll dy=nU[n]-nD[n];
+        bool ok=false;
+        for (int i=0;i<n;++i){
+            ll u=nR[i]-nL[i];
+            ll v=nU[i]-nD[i];
+            ll needx=x-u, needy=y-v;
+            if (dx==0 && dy==0){
+                if (u==x && v==y){
+                    ok=true;
+                    break;
+                }
+                continue;
+            }
+            ll kx,ky;
+            if (dx==0){
+                if (needx!=0 || needy%dy!=0) continue;
+                ky = needy / dy;
+                if (ky>=0) { ok = true; break; }
+                continue;
+            }
+            if (dy==0){
+                if (needy!=0 || needx%dx!=0) continue;
+                kx = needx / dx;
+                if (kx>=0){ ok = true; break; }
+                continue;
+            }
+            if (needx%dx!=0 || needy%dy!=0) continue;
+            kx = needx / dx;
+            ky = needy / dy;
+            if (kx==ky && kx>=0){
+                ok=true;
+                break;
+            }
+        }
+        if (ok) cout<<"YES"<<'\n';
+        else cout<<"NO"<<'\n';
+    }
+}
