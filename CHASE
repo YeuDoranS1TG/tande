@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define maxN 100000+5
+#define ll long long
+int n,k;
+int v1,v2;
+ll s;
+struct ss {
+    bool operator()(const pair<ll,int>&c, const pair<ll,int>&b)const{
+        return c.second<b.second;
+    }
+};
+int main() {
+	cin>>n>>k;
+    cin>>v1>>v2;
+    cin>>s;
+    ll res_s=s;
+    map<ll,int>a;
+    for (int i=0;i<n;++i){
+        ll x; int y;
+        cin>>x>>y;
+        a[x]=y;
+    }
+    if (v2<v1 || (v2==v1 && s>0)){
+        cout<<"inf"<<'\n';
+        return 0;
+    }
+    if (s==0){
+        cout<<"0.000000"<<'\n';
+        return 0;
+    }
+    ll cs=0;
+    priority_queue<pair<ll,int>,vector<pair<ll,int>>,ss>q;
+    //int m=11;
+    while (cs<s){
+        if (a.count(s)) {
+            q.push({s, a[s]});
+        }/*
+        auto temp=q;
+        while (!temp.empty()){
+            cout<<"*"<<temp.top().first<<" "<<temp.top().second<<'\n';
+            temp.pop();
+        }*/
+        cs+=v2, s+=v1;
+        //cout<<cs<<" "<<s<<'\n';
+        if (!q.empty() && cs>=s && k>0 ){
+            cs-=v2;
+            s+=q.top().second-v1;
+            q.pop();
+            //cout<<"here"<<'\n';
+            k--;
+        }
+    }
+    cout<<fixed<<setprecision(6)<<(long double)s-res_s<<'\n';
+}
