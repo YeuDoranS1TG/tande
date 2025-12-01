@@ -1,0 +1,45 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100000+5
+#define inf 100000000000
+vector<pair<int,int>>g[maxN];
+vector<long long>d;
+void dijkstra(){
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
+    q.push({0,1});
+    d[1]=0;
+    //par[1]=1;
+    while (!q.empty()){
+        int u=q.top().second;q.pop();
+        for (auto it:g[u]){
+            int v=it.first;
+            int w=it.second;
+            if (d[v]>d[u]+w){
+                d[v]=d[u]+w;
+                q.push({d[v],v});
+                //par[v]=u;
+            }
+        }
+    }
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cout.tie(nullptr);cout.tie(nullptr);
+    freopen("DIJKSTRA.INP","r",stdin);
+    freopen("DIJKSTRA.OUT","w",stdout);
+    int n,m;
+    cin>>n>>m;
+    for (int i=0;i<m;++i){
+        int u,v,w;
+        cin>>u>>v>>w;
+        g[u].push_back({v,w});
+    }
+    d.resize(n+1,inf);
+    //par.resize(n+1);
+    dijkstra();
+    if (d[n]==inf) cout<<-1;
+    else cout<<d[n];
+    return 0;
+}
