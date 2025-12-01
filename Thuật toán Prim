@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100000+5
+bool vis[maxN]={0};
+vector<pair<int,int>>g[maxN];
+long long path=0;
+int cnt=0;
+void prim(){
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
+    q.push({0,1});
+    //jour.push_back(1);
+    while (!q.empty()){
+        int u=q.top().second, w=q.top().first; //cout<<"^"<<u<<'\n';
+        q.pop();
+        if (!vis[u]){
+            vis[u]=true;
+            path+=w;
+            ++cnt;
+            for (auto it:g[u]){
+                int v=it.first;
+                int ww=it.second;
+                if (!vis[v]){
+                    q.push({ww,v});
+                }
+            }
+        }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);cout.tie(0);
+    //freopen("PRIM.INP","r",stdin);
+    //freopen("PRIM.OUT","w",stdout);
+    int n,m;
+    cin>>n>>m;
+    for (int i=0;i<m;++i){
+        int u,v,w;
+        cin>>u>>v>>w;
+        g[u].push_back({v,w});
+        g[v].push_back({u,w});
+    }
+    prim();
+    if (cnt!=n){
+        cout<<-1;
+        return 0;
+    }
+    cout<<path<<'\n';/*
+    for (auto x:jour){
+        cout<<x<<" ";
+    }*/
+    return 0;
+}
