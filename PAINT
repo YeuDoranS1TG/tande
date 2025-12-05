@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll n;
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    freopen("PAINT.INP","r",stdin);
+    freopen("PAINT.OUT","w",stdout);
+    cin>>n;
+    ll start=2, cnt=2, res_start=0, dem=1;
+    while(start<n){
+        ++dem;
+        cnt*=2;
+        res_start=start;
+        start=start+cnt;
+        //cout<<start<<" "<<cnt<<" "<<res_start<<" "<<dem<<'\n';
+    }
+    ll mid=(ll)(start-res_start)/2 + res_start;
+    ll m;
+    bool ok2=false;
+    //cout<<mid<<'\n';
+    if (n>mid){
+        m=n-cnt/2;
+        ok2=true;
+    }
+    else m=n;
+    //cout<<m<<'\n';
+    ll pos=m-res_start;
+    bool ok1=false;
+    if (pos%2==0){ pos-=1; ok1=true;}
+    //cout<<pos<<"*\n";
+    //cout<<res_start-pos<<'\n';
+
+    ll res1=res_start - cnt/2;
+    //cout<<res1<<"^\n";
+    if (!ok1){
+        cout<<res1+(pos+1)/2<<'\n';
+    }
+    else if (ok1){
+        //cout<<res1<<" "<<(pos+1)/2<<" "<<cnt/4<<'\n';
+        cout<<res1+(pos+1)/2+cnt/4<<'\n';
+    }
+    //cout<<'\n';
+    ll place=m-res_start;
+    place=place*2-1;
+    //cout<<place<<"^\n";
+    if (!ok2){
+        cout<<start+place<<" "<<start+place+cnt<<'\n';
+    }
+    else if (ok2){
+        //cout<<"*";
+        cout<<start+place+1<<" "<<start+place+cnt+1<<'\n';
+    }
+
+	return 0;
+}
