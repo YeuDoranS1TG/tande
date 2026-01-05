@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100000+5
+int n;
+int ar[3][maxN];
+bool used[maxN]={0};
+int cnt[3][maxN];
+int dem=0;
+void delcol(){
+    vector<int>delected;
+    for (int i=0;i<n;++i){
+        if (!used[i]){
+            if (!cnt[0][ar[1][i]] || !cnt[0][ar[2][i]]){
+                delected.push_back(i);
+                used[i]=true;
+                ++dem;
+            }
+            else if (!cnt[1][ar[0][i]] || !cnt[1][ar[2][i]]){
+                delected.push_back(i);
+                used[i]=true;
+                ++dem;
+            }
+            else if (!cnt[2][ar[0][i]] || !cnt[2][ar[1][i]]){
+                delected.push_back(i);
+                used[i]=true;
+                ++dem;
+            }
+        }
+    }
+
+    for (int x:delected){
+        if(used[x]){
+            --cnt[0][ar[0][x]];
+            --cnt[1][ar[1][x]];
+            --cnt[2][ar[2][x]];
+        }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(0); 
+    cin.tie(0); cout.tie(0);
+    // freopen("DELCOL.INP", "r", stdin); 
+    // freopen("DELCOL.OUT", "w", stdout); 
+    cin>>n;
+    for (int i=0;i<3;++i){
+        for (int j=0;j<n;++j){
+            int t; 
+            cin>>t;
+            ar[i][j]=t;
+            ++cnt[i][t];
+        }
+    }
+    delcol();
+
+    while (dem>0){
+        dem=0;
+        delcol();
+    }
+
+    int cnt1=0;
+    for (int i=0;i<n;++i){
+        if (used[i]) ++cnt1;
+    }
+    cout<<cnt1;
+    return 0;
+}
