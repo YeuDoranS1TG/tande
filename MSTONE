@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 1000000+5
+struct edge{
+    int v,id;
+};
+vector<edge>g[maxN];
+bool vis[maxN]={0};
+vector<int>ans;
+vector<int>path;
+void dfs(int u){
+    for (auto &e:g[u]){
+        int v=e.v, id=e.id;
+        //path.push_back(v);
+        if (!vis[id]){
+            vis[id]=true;
+            //cout<<(id+1)/2<<" ";
+            //path.push_back(v);
+            dfs(v);
+            ans.push_back(id);
+        }
+    }
+}/*
+void bfs(int u){
+    queue<int>q;
+    visited[u]=true;
+    q.push(u);
+    while(!q.empty()){
+        int v=q.front();
+        q.pop();
+        for (auto &e:g[v]){
+            if (!visited[e]){
+                q.push(e);
+                visited[e]=true;
+            }
+        }
+    }
+}*/
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
+	freopen("MSTONE.INP","r",stdin);
+	freopen("MSTONE.OUT","w",stdout);
+    int n,m;
+    cin>>n>>m;
+    int cnt=1;
+    for (int i=1;i<=m;++i){
+        int x,y;
+        cin>>x>>y;
+        g[x].push_back({y,cnt});
+        g[y].push_back({x,cnt});
+        ++cnt;
+        g[x].push_back({y,cnt});
+        g[y].push_back({x,cnt});
+        ++cnt;
+    }
+    //path.push_back(1);
+    dfs(1);
+    //cout<<'\n';
+    //for (auto &x:path) cout<<x<<" ";
+    //cout<<'\n';
+    reverse(ans.begin(), ans.end());
+    for (auto &h:ans){
+        cout<<(h+1)/2<<" ";
+    }
+    return 0;
+}
