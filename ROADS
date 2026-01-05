@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define maxN 100000+5
+struct edge{
+    int u,v,w,id;
+};
+vector<int> p, sz;
+vector<int>ans;
+int findroot(int x){
+    if (p[x]==x) return x;
+    return p[x]=findroot(p[x]);
+}
+bool unite(int a, int b){
+    a=findroot(a);
+    b=findroot(b);
+    if (a==b) return false;
+    if (sz[a] < sz[b]) swap(a,b);
+    p[b]=a;
+    sz[a]+=sz[b];
+    return true;
+}
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);cout.tie(0);
+    freopen("ROADS.INP","r",stdin);
+    freopen("ROADS.OUT","w",stdout);
+    int n,m,k;
+    cin>>n>>m>>k;
+    vector<edge>g;
+    g.resize(m+1);
+    vector<int>used(m,0);
+    for (int i=0;i<m;++i){
+        cin>>g[i].u>>g[i].v>>g[i].w;
+        g[i].id=i+1;
+    }
+    vector<int>t;
+    vector<int>h;
+    for (int i=0;i<m;++i){
+        if (g[i].w==0) t.push_back(i);
+        else h.push_back(i);
+    }
+    p.resize(n+1);
+    sz.assign(n+1,1);
+    for (int i=1;i<=n;++i) p[i]=i;
+    int cnt=0;
+    for (int idx:t){
+        auto e=g[idx];
+        bool ok=unite(e.u, e.v);
+    }
+    for (int idx:h){
+        auto e=g[idx];
+        if (findroot(e.u)!=findroot(e.v)){
+            bool ok1=unite(e.u,e.v);
+            used[idx] = 1;
+            ans.push_back(e.id);
+            cnt++;
+        }
+    }
+    if (cnt>k) {
+        cout<<-1;
+        return 0;
+    }
+    p.resize(n+1);
+    sz.assign(n+1,1);
+    for (int i=1;i<=n;++i) p[i]=i;
+    for (int idx:h){
+        auto e=g[idx];
+        if (used[idx]){
+            bool ok2=unite(e.u,e.v);
+        }
+    }
+    for (int idx:h){
+      auto e=g[idx];
+        if (cnt==k) break;
+        if (used[idx]) continue;
+        if (unite(e.u,e.v)){
+            used[idx]=1;
+            ans.push_back(e.id);
+            cnt++;
+        }
+    }
+    if (cnt<k) {
+        cout << -1;
+        return 0;
+    }
+    for (int idx:t) {
+        auto e=g[idx];
+        if (unite(e.u, e.v)){
+            ans.push_back(e.id);
+        }
+    }
+    if ((int)ans.size()!=n-1){
+        cout << -1;
+        return 0;
+    }
+    for (int i=0;i<(int)ans.size();++i){
+        cout<<ans[i]<<' ';
+    }
+    return 0;
+}
