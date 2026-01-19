@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<long long>md;
+
+int binase(int l, int r, long long val){
+    int res = -1;
+    while (l <= r){
+        int mid = (l + r) / 2;
+        if (val >= md[mid]){
+            r = mid - 1;
+            res = mid;
+        }
+
+        else {
+            l = mid + 1;
+        }
+    }
+    return res;
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(nullptr);
+    freopen("MODSEQ.INP","r",stdin);
+    freopen("MODSEQ.OUT","w",stdout);
+	int n,m;
+    cin>>n;
+    long long temp = -1;
+    for (int i=0; i<n; ++i){
+        long long a;
+        cin>>a;
+        if (temp == -1 || temp >= a){
+            temp = a;
+            md.emplace_back(a);
+        }
+    }
+
+    cin>>m;
+    while (m--){
+        long long b;
+        cin>>b;
+
+        int l = 0, r = (int)md.size() - 1;
+        while (l <= r){
+            int pos = binase(l,r,b);
+            //if (m==3) cout<<pos<<"\n";
+            if (pos == -1) break;
+            b = b % md[pos];
+            //cout<<b<<" ";
+            l = pos + 1;
+        }
+
+        cout<<b<<" ";
+    }
+    return 0;
+}
