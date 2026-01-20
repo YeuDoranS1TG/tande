@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn = 1e5+5;
+long long st[4*maxn];
+void build(int id, int l, int r){
+    if (l == r){
+        st[id] = 0;
+        return;
+    }
+    int mid = (l + r) >> 1;
+    build(2*id, l, mid);
+    build(2*id+1, mid+1, r);
+    //st[id]=st[2*id] + st[2*id+1];
+}
+void update(int id, int l, int r, int i, long long val){
+    if (l > i || r < i) return;
+    if(l == r){
+        st[id] = val;
+        return;
+    }
+    int mid = (l + r) >> 1;
+    update(2*id, l, mid, i, val);
+    update(2*id+1, mid+1, r, i, val);
+    st[id] = max(st[2*id], st[2*id+1]);
+}
+long long get(int id, int l, int r, int u, int v){
+    if (l > v || r < u) return 0;
+    if (l >= u && r <= v) return st[id];
+    int mid = (l + r) >> 1;
+    long long val1 = get(2*id, l, mid, u, v);
+    long long val2 = get(2*id+1, mid+1, r, u, v);
+    return max(val1, val2);
+}
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
+    //freopen("QUERY.INP","r",stdin);
+    //freopen("QUERY.OUT","w",stdout);
+
+    int n,m;
+    cin>>n>>m;
+    build(1,1,n);
+    while (m--){
+        char c;
+        int i;
+        long long k;
+        cin >> c >> i >> k;
+        if (c == 'S'){
+            update(1, 1, n, i, k);
+        }
+        else {
+            cout << get(1, 1, n, i, (int)k) << '\n';
+        }
+    }
+    return 0;
+}
