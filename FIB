@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll MOD;
+struct matran{
+    ll goc[2][2];
+    matran(){
+        goc[0][0] = goc[0][1] = goc[1][0] = goc[1][1] = 0;
+    }
+    friend matran operator * (matran x, matran y){
+        matran c;
+        for(int i = 0; i < 2; i++){
+            for(int j = 0; j < 2; j++){
+                for(int k = 0; k < 2; k++){
+                    c.goc[i][j] = (c.goc[i][j] + ((x.goc[i][k] % MOD) * (y.goc[k][j] % MOD)) % MOD);
+                    c.goc[i][j] %= MOD;
+                }
+            }
+        }
+        return c;
+    }
+};
+
+matran binpow(matran x, ll n){
+    matran donvi;
+    donvi.goc[0][0] = 1; donvi.goc[1][1] = 1;
+    if (n == 0) return donvi;
+
+    if(n == 1) return x;
+
+    matran tmp = binpow(x, n / 2);
+    tmp = tmp * tmp;
+    if (n % 2 == 1) tmp = tmp * x;
+    return tmp;
+}
+
+ll getfibo(ll n, ll a, ll b){
+    if (n == 1) return a % MOD;
+    if (n == 2) return b % MOD;
+
+    matran base;
+    base.goc[0][0] = 1; base.goc[0][1] = 1;
+    base.goc[1][0] = 1; base.goc[1][1] = 0;
+
+    matran res = binpow(base,n-2);
+    ll fn = (res.goc[0][0] * (b % MOD)) % MOD + (res.goc[0][1] * (a % MOD)) % MOD;
+    return fn % MOD;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    freopen("FIB.INP","r",stdin);
+    freopen("FIB.OUT","w",stdout);
+    int T;
+    cin>>T;
+    while (T--){
+        ll a,b,r,l;
+        cin >> a >> b >> l >> r >> MOD;
+
+        matran x;
+        x.goc[0][0] = 1; x.goc[0][1] = 1;
+        x.goc[1][0] = 1; x.goc[1][1] = 0;
+
+        if (l == 1) {
+            cout << (getfibo(r+2,a,b) - (b % MOD) + MOD) % MOD << '\n';
+        } else {
+            cout << (getfibo(r+2,a,b) - getfibo(l+1,a,b) + MOD) % MOD << '\n';
+        }
+    }
+}
