@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+const int maxn = 105;
+const int MOD = 1e9 + 7;
+int n;
+struct matran{
+    ll goc[maxn][maxn];
+    matran(){
+        for (int i=1; i<=n; ++i)
+            for (int j=1; j<=n; ++j)
+                goc[i][j] = 0;
+    }
+
+    friend matran operator * (matran c, matran d){
+        matran res;
+        for(int i = 1; i <= n; ++i){
+            for(int j = 1; j <= n; ++j){
+                long long sum = 0;
+                for(int k = 1; k <= n; ++k){
+                    long long product = (1LL * c.goc[i][k] * d.goc[k][j]) % MOD;
+                    sum = (sum + product) % MOD;
+                }
+                res.goc[i][j] = sum;
+            }
+        }
+        return res;
+    }
+};
+
+matran binpow(matran x, ll k){
+    matran temp;
+    for (int i = 1; i <= n; ++i) temp.goc[i][i] = 1;
+    
+    while (k > 0){
+        if (k&1){
+           temp = temp * x;
+        }
+        x = x * x;
+        k >>= 1;
+    }
+    return temp;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    
+    int m,k;
+    cin >> n >> m >> k;
+
+    matran x;
+    int u,v;
+    for (int i = 1; i<= m; ++i){
+        cin >> u >> v;
+        x.goc[u][v] = 1;
+    }
+
+    matran val = binpow(x,k);
+    long long answer = 0;
+    for (int i=1; i<=n; ++i){
+        for (int j=1; j<=n; ++j){
+            answer = (answer + val.goc[i][j]) % MOD;
+        }
+    }
+    cout << answer << '\n';
+}
